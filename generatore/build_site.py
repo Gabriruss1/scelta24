@@ -195,7 +195,7 @@ def main():
 
     # stessa versione degli asset usata dal generatore di proposte
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    from genera_proposta import versione_assets
+    from genera_proposta import versione_assets, pulizia_asset
     versione = versione_assets()
 
     # gli asset devono esistere: se il generatore non e' mai girato, si copiano
@@ -260,6 +260,9 @@ def main():
     print("Sito pubblico generato in %s" % out_root)
     print("  index.html   robots.txt   sitemap.xml   images/og.png")
     print("Proposte indicizzabili in sitemap: %d su %d" % (len(indicizzabili), len(proposte)))
+    rimosse = pulizia_asset(out_root)
+    if rimosse:
+        print("Asset versione precedente rimossa: %s" % ", ".join(rimosse))
     return 0
 
 

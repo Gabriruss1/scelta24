@@ -603,6 +603,41 @@ def genera_qr(url):
 # main
 # --------------------------------------------------------------------------
 
+def pulizia_asset(out_root):
+    """Le cartelle assets/<hash> si moltiplicano a ogni modifica del kit.
+    Tiene solo quelle referenziate davvero da una pagina pubblicata:
+    cancellare una versione ancora in uso romperebbe la pagina."""
+    import re
+    assets_root = os.path.join(out_root, "assets")
+    if not os.path.isdir(assets_root):
+        return []
+    referenziate = set()
+    for percorso, _, files in os.walk(out_root):
+        if os.path.basename(percorso) == "assets":
+            continue
+        for nome in files:
+            if nome != "index.html":
+                continue
+            try:
+                with open(os.path.join(percorso, nome), "r", encoding="utf-8") as f:
+                    contenuto = f.read()
+            except OSError:
+                continue
+            for hash_ in re.findall(r"assets/([0-9a-f]{6,12})/", contenuto):
+                referenziate.add(hash_)
+
+    rimosse = []
+    for voce in sorted(os.listdir(assets_root)):
+        percorso = os.path.join(assets_root, voce)
+        if not os.path.isdir(percorso):
+            continue
+        if voce in referenziate:
+            continue
+        shutil.rmtree(percorso, ignore_errors=True)
+        rimosse.append(voce)
+    return rimosse
+
+
 def main():
     parser = argparse.ArgumentParser(description="Genera la pagina di proposta da un JSON.")
     parser.add_argument("fonte", help="percorso della cartella o del file proposta.json")
@@ -708,6 +743,9 @@ def main():
     for p in risultati:
         print("  %s" % os.path.relpath(p, out_root))
     print("URL: %s" % url_canonica)
+    rimosse = pulizia_asset(out_root)
+    if rimosse:
+        print("Asset versione precedente rimossa: %s" % ", ".join(rimosse))
     return 0
 
 
