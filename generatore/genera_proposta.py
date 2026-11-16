@@ -58,8 +58,11 @@ PAROLE_VIETATE = [
     "passione", "amore per", "sogni", "soluzioni all'avanguardia",
 ]
 
-# URL base di default: GitHub Pages del progetto gemello
-URL_BASE_DEFAULT = "https://gabriruss1.github.io/preventivi24-clienti"
+# URL base di default: GitHub Pages di Scelta24
+URL_BASE_DEFAULT = "https://gabriruss1.github.io/scelta24"
+
+# Sito principale Preventivi24 (per i rimandi "parliamone")
+URL_SITO_B2B = "https://gabriruss1.github.io/preventivi24"
 
 
 # --------------------------------------------------------------------------
@@ -212,7 +215,12 @@ def valida(d):
 # link di scelta
 # --------------------------------------------------------------------------
 
-def testo_scelta(d, opzione):
+def testo_scelta(d, opzione, azienda=None):
+    """Il messaggio che parte quando il committente finale sceglie.
+    Se il cliente ha impostato un messaggio proprio (CTA), si usa quello."""
+    azienda = azienda if azienda is not None else (d.get("azienda") or {})
+    if azienda.get("cta_messaggio"):
+        return azienda["cta_messaggio"]
     return (
         "Buongiorno, ho letto la proposta %s (%s).\n"
         "Voglio l'opzione %s — %s.\n"
@@ -226,15 +234,18 @@ def testo_scelta(d, opzione):
 
 
 def link_scelta(d, opzione, azienda=None):
-    """wa.me se c'e' un numero WhatsApp, altrimenti mailto."""
+    """wa.me se c'e' un numero WhatsApp, altrimenti mailto.
+    cta_email sovrascrive azienda.email: serve per le proposte dimostrative,
+    dove il pulsante deve arrivare a noi e non all'azienda finta."""
     azienda = azienda if azienda is not None else (d.get("azienda") or {})
-    testo = testo_scelta(d, opzione)
+    testo = testo_scelta(d, opzione, azienda)
     numero = re.sub(r"\D", "", azienda.get("whatsapp") or "")
     if numero:
         return "https://wa.me/%s?text=%s" % (numero, urllib.parse.quote(testo))
-    email = azienda.get("email") or ""
+    email = azienda.get("cta_email") or azienda.get("email") or ""
     if email:
-        soggetto = "Scelta opzione %s — proposta %s" % (opzione.get("nome", ""), d.get("riferimento", ""))
+        soggetto = azienda.get("cta_oggetto") or ("Scelta opzione %s — proposta %s" % (
+            opzione.get("nome", ""), d.get("riferimento", "")))
         corpo = testo + "\n\n---\n" + (azienda.get("nome", ""))
         return "mailto:%s?subject=%s&body=%s" % (
             email, urllib.parse.quote(soggetto), urllib.parse.quote(corpo))
@@ -319,6 +330,32 @@ def render_lista_voci(voci, classe=""):
         classe, "".join("<li>%s</li>" % esc(v) for v in voci))
 
 
+def render_fascia_contatto(d):
+    """La fascia 'parliamone'.
+    Compare solo se e' una proposta dimostrativa o se il cliente ha indicato
+    un indirizzo di contatto (cta_url). Su una proposta reale, privata,
+    non serve: aggiungerebbe una voce che non ha senso per il committente."""
+    azienda = d.get("azienda") or {}
+    url = azienda.get("cta_url") or (URL_SITO_B2B + "/contatti.html" if d.get("demo") else "")
+    if not url:
+        return ""
+    if d.get("demo"):
+        titolo = "Questa e' una proposta dimostrativa"
+        testo = ("Qui hai visto come funziona una proposta su tre opzioni. "
+                 "Se vuoi la tua, sul tuo logo e con i tuoi prezzi, scrivici: "
+                 "la prepariamo in 24-72 ore.")
+    else:
+        titolo = azienda.get("cta_titolo") or "Ti serve qualcosa di diverso?"
+        testo = azienda.get("cta_testo") or "Scrivici: rispondiamo entro poche ore."
+    return (
+        '<div class="fascia-contatto">'
+        '<div class="fascia-contatto__testo">'
+        '<b>%s</b><p>%s</p></div>'
+        '<a class="btn btn--accent" href="%s">Parliamone</a>'
+        "</div>" % (esc(titolo), esc(testo), esc(url))
+    )
+
+
 def render_corpo(d, opts):
     azienda = d.get("azienda") or {}
     logo_html = ""
@@ -383,10 +420,12 @@ def render_corpo(d, opts):
     corpo.append('<h2 class="h2">Come confermare</h2>')
     corpo.append('<div class="chiusura">')
     corpo.append("<h3>Scegli l'opzione che preferisci</h3>")
-    corpo.append("<p>Ogni opzione ha il suo pulsante <b>Scelgo l'opzione</b>: ti si apre "
-                 "WhatsApp con il testo gia' pronto. Aggiungi il tuo nome e il tuo recapito, "
+    azienda = d.get("azienda") or {}
+    canale = "WhatsApp" if re.sub(r"\D", "", azienda.get("whatsapp") or "") else "la mail"
+    corpo.append("<p>Ogni opzione ha il suo pulsante <b>Scelgo l'opzione</b>: ti si apre %s "
+                 "con il testo gia' pronto. Aggiungi il tuo nome e il tuo recapito, "
                  "e invia. Se preferisci, scrivi una mail a %s.</p>"
-                 % esc((d.get("azienda") or {}).get("email", "")))
+                 % (canale, esc(azienda.get("cta_email") or azienda.get("email", ""))))
     corpo.append("<p><b>Questa scelta non e' un accettazione del contratto.</b> "
                  "La proposta resta valida fino al %s. La conferma definitiva avviene con la "
                  "firma del documento.</p>" % (fmt_data(d.get("valida_fino")) if d.get("valida_fino") else "data indicata"))
@@ -406,7 +445,11 @@ def render_corpo(d, opts):
         corpo.append('<div class="contatti">%s</div>' % "".join(
             "<span>%s</span>" % c for c in contatti))
     corpo.append("</div>")
-    corpo.append("</section>")
+
+    fascia = render_fascia_contatto(d)
+    if fascia:
+        corpo.append("</section>")
+        corpo.append('<section class="fascia-sezione no-print">%s</section>' % fascia)
 
     return "\n".join(corpo)
 
@@ -429,6 +472,9 @@ def render_pie(d):
     note = d.get("nota") or "Prezzi al netto di IVA. Le stime sono indicative."
     if d.get("privacy_nota"):
         note = note + " " + d["privacy_nota"]
+    if d.get("demo"):
+        note = ("PROPOSTA DIMOSTRATIVA. Azienda, cliente e prezzi sono inventati: "
+                "il documento serve a mostrare il metodo. " + note)
     return esc(note)
 
 

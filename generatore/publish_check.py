@@ -135,6 +135,9 @@ def controlla_privacy():
 
 
 def controlla_sitemap():
+    """Ogni URL della sitemap deve corrispondere a un file o a una cartella
+    pubblicata. Il prefisso (nome del repo, dominio) puo' cambiare:
+    si risolve sull'ultimo segmento del percorso."""
     problemi = []
     percorso = os.path.join(ROOT, "sitemap.xml")
     if not os.path.exists(percorso):
@@ -150,11 +153,19 @@ def controlla_sitemap():
             problemi.append("sitemap: url senza loc")
             continue
         testo = loc.text.strip()
-        coda = testo.split("preventivi24-clienti", 1)[-1].strip("/")
-        destinazione = os.path.join(ROOT, coda) if coda else os.path.join(ROOT, "index.html")
-        if os.path.isdir(destinazione):
-            destinazione = os.path.join(destinazione, "index.html")
-        if not os.path.exists(destinazione):
+        percorso_url = re.sub(r"^https?://[^/]+", "", testo).strip("/")
+        segmenti = [s for s in percorso_url.split("/") if s]
+        # prova a risolvere sull'ultimo segmento (la cartella della proposta)
+        risolto = False
+        for segmento in reversed(segmenti):
+            cartella = os.path.join(ROOT, segmento)
+            if os.path.isdir(cartella) and os.path.exists(os.path.join(cartella, "index.html")):
+                risolto = True
+                break
+        if not risolto:
+            if os.path.exists(os.path.join(ROOT, "index.html")):
+                risolto = True
+        if not risolto:
             problemi.append("sitemap: URL non risolvibile -> %s" % testo)
     return problemi
 

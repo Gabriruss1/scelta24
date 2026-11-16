@@ -23,6 +23,9 @@
     "telefono": "02 0000 0000",
     "email": "info@serramentiaurora.it",
     "whatsapp": "",
+    "cta_email": "russo.enterprise.biz@gmail.com",
+    "cta_oggetto": "Vorrei la mia proposta a 3 opzioni - Preventivi24",
+    "cta_messaggio": "Buongiorno, ho visto la proposta dimostrativa.\nVorrei la mia proposta su 3 opzioni (Base, Consigliata, Completa) per la mia attivita'.\nIl mio nome e' ___, la mia azienda e' ___.",
     "logo": "images/aurora.svg",
     "colori": {
       "primario": "#12395C",

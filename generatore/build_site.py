@@ -156,7 +156,7 @@ h2{font-size:30px;font-weight:400;opacity:.8;margin-top:26px;max-width:820px;lin
 <div><div class="kick">Il metodo del preventivo a 3 opzioni</div>
 <h1>Un preventivo, tre livelli. Il cliente sceglie il <em>valore</em>.</h1>
 <h2>Base, Consigliata e Completa: prezzi, tempi e cosa e' incluso. Con la fascia consigliata in evidenza.</h2></div>
-<div class="foot">Preventivi24 &middot; proposte su tre opzioni per aziende e committenti finali</div>
+<div class="foot">Scelta24 &middot; un servizio Preventivi24</div>
 </body></html>"""
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -189,10 +189,15 @@ def costruisci_jsonld(url_base):
         "@graph": [
             {
                 "@type": "WebSite",
-                "name": "Preventivi24",
+                "name": "Scelta24",
                 "url": url_base + "/",
                 "inLanguage": "it-IT",
                 "description": "Il metodo del preventivo a 3 opzioni: Base, Consigliata, Completa.",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Preventivi24",
+                    "url": URL_AZIENDE,
+                },
             },
             {
                 "@type": "FAQPage",
@@ -206,7 +211,7 @@ def costruisci_jsonld(url_base):
 def main():
     parser = argparse.ArgumentParser(description="Costruisce la parte pubblica del sito.")
     parser.add_argument("--out", default=ROOT, help="cartella del sito")
-    parser.add_argument("--url-base", default="https://gabriruss1.github.io/preventivi24-clienti")
+    parser.add_argument("--url-base", default="https://gabriruss1.github.io/scelta24")
     parser.add_argument("--plausible", default="", help="dominio Plausible")
     args = parser.parse_args()
 
@@ -240,7 +245,7 @@ def main():
         piano = ('<script defer data-domain="%s" src="https://plausible.io/js/script.js"></script>'
                  % args.plausible)
 
-    titolo = "Preventivo a 3 opzioni: Base, Consigliata, Completa | Preventivi24"
+    titolo = "Scelta24 — Il preventivo a 3 opzioni: Base, Consigliata, Completa"
     descrizione = ("Come si presenta un preventivo con tre livelli invece di un solo prezzo. "
                    "Esempi reali di proposte su tre opzioni per aziende e committenti finali.")
 
