@@ -1,80 +1,47 @@
 # AGENTS.md — regole di questo progetto
 
-Sei il manutentrore del progetto gemello "Preventivi24 — Proposta".
-Prima di scrivere qualsiasi cosa, leggi questo file e la skill `proposta`.
+Sei il manutentore di **Scelta24** (progetto gemello di Preventivi24).
+Prima di scrivere, leggi questo file e i documenti in `docs/`.
 
 ## Cosa fa questo progetto
 
-Trasforma un file JSON (`proposte/<slug>/proposta.json`) in:
+1. **Confronto preventivi/contratti (prodotto principale):** trasforma `analisi/<slug>/analisi.json` in un report che il committente finale apre dal telefono: tabella normalizzata, costo reale, voci mancanti, semafori di rischio, verdetto e domande da inviare. Genera anche `verdetto.pdf` (1 pagina) e `og.png`. Il confronto e' prodotto dall'assistente e **controllato da una persona prima dell'invio**.
+2. **Proposta a 3 opzioni (strumento/B2B):** trasforma `proposte/<slug>/proposta.json` in pagina + PDF + anteprima. Le sue voci Base/Consigliata/Completa alimentano le griglie di `conoscenza/`.
 
-- una pagina web che il **committente finale** apre dal telefono e in cui sceglie
-  una delle tre opzioni;
-- un'anteprima 1200x630 (quella che si vede quando il link si condivide su WhatsApp);
-- un PDF A4 di due pagine, il documento da archiviare e da firmare.
+Non e' un sito vetrina: e' uno strumento di decisione. Ogni scelta e' subordinata a chiarezza e correttezza.
 
-Non e' un sito vetrina: e' uno strumento di vendita per un'azienda che emette
-preventivi. Ogni decisione grafica e' subordinate a questo.
-
-## Comandi (eseguili dalla radice del progetto)
+## Comandi (dalla radice)
 
 ```bash
-# rigenera una proposta (pagina + anteprima + PDF)
+# confronto
+python generatore\analizza.py analisi\<slug>
+# confronto con dati reali (fuori dal repo)
+python generatore\analizza.py analisi\<slug> --out out
+
+# proposta a 3 opzioni
 python generatore\genera_proposta.py proposte\<slug>
 
-# rigenera la parte pubblica (landing, robots, sitemap)
+# sito pubblico e controlli (DEVONO passare)
 python generatore\build_site.py
-
-# controlli prima di pubblicare: DEVE passare
 python generatore\publish_check.py
-
-# tutto insieme, nell'ordine giusto
-python generatore\genera_proposta.py proposte\<slug> && python generatore\build_site.py && python generatore\publish_check.py
 ```
-
-Opzioni utili del generatore:
-
-| opzione | quando |
-|---|---|
-| `--out out` | genera in una cartella privata, per Cloudflare Pages (proposte reali) |
-| `--pubblico` | la pagina e' pubblica: vieta l'uscita dei dati del committente finale |
-| `--robots "index, follow"` | solo per le demo: le proposte reali restano `noindex` |
-| `--no-pdf --no-og` | ciclo rapido quando si sistema il testo |
-| `--url-base https://...` | base degli URL pubblici (GitHub Pages o Cloudflare Pages) |
-| `--plausible <dominio>` | statistiche di apertura e di scelta |
 
 ## Regole non negoziabili
 
-1. **Tre opzioni, sempre**: Base, Consigliata, Completa. La Consigliata non e'
-   la piu' cara e ha una riga "perche' conviene".
-2. **Ogni prezzo ha i tempi** accanto. Un prezzo senza tempi non passa la
-   validazione e non si genera.
-3. **Non si inventano prezzi**: si ricavano dal listino del cliente e dai
-   preventivi che ha mandato.
-4. **Frasi da massimo 20 parole.** Niente marketing vuoto: vietate "eccellenza",
-   "innovativo", "rivoluzionario", "soluzioni all'avanguardia", "passione".
-5. **Il pulsante dice "Scelgo l'opzione"**, non "Accetto". La scelta online non
-   e' un accettazione contrattuale: la conferma resta sulla firma del PDF.
-6. **I dati del committente finale non finiscono in pagina** se non e' stato
-   autorizzato (`cliente_finale.mostra_cliente`). Il `publish_check.py` lo
-   blocca, anche per il cognome.
-7. **Le proposte reali sono `noindex`** e non finiscono nella sitemap. Solo le
-   demo sono indicizzabili.
-8. **Zero dipendenze obbligatorie**: Python standard. `segno` serve solo per il
-   QR (se manca, la pagina funziona lo stesso).
-
-## Stile
-
-- Commenti e testi in italiano, senza accenti nei nomi di file.
-- Il design system e' in `kit/tokens.css`: i colori del cliente si cambiano
-  da l'override `--brand` / `--brand-ink` (nel `colori` del JSON).
-- Non introdurre framework, bundler o dipendenze npm: il sito deve restare
-  statico e pubblicabile con un `git push`.
-- Il sito principale (`prova 50\sito`) e' un progetto separato e funzionante:
-  non lo si tocca.
+1. **Verdetto su tutte le dimensioni**: prezzo, rischi, qualita', tempi. Non scegliere mai solo il prezzo piu' basso senza verificare costo reale e omissioni.
+2. **Griglia di completezza**: usare `conoscenza/<tipo>.json`; segnalare voci mancanti, caparre alte, tempi vaghi, garanzie ridotte, IVA/pratiche non chiare.
+3. **Controllo umano prima dell'invio**: numeri, stime e verdetto vanno verificati. Le stime delle voci mancanti sono esplicite.
+4. **Privacy**: documenti/analisi reali **mai** nel repo pubblico; non usati per addestrare modelli; eliminati dopo la consegna. Solo contenuti `demo: true` possono essere pubblicati e indicizzati. `publish_check.py` deve bloccare le violazioni.
+5. **Zero costi ricorrenti per l'analisi**: nessuna integrazione che richieda API a pagamento per singola analisi.
+6. **Frasi chiare** (max ~20 parole), niente marketing vuoto. Spiegare in italiano semplice.
+7. **Proposte a 3 opzioni**: tre opzioni, una consigliata non piu' cara, ogni prezzo con tempi, pulsante "Scelgo l'opzione" (non "Accetto").
+8. **Zero dipendenze obbligatorie**: Python standard. Chrome per PDF/OG. `segno` opzionale per QR.
+9. **Non toccare** `C:\Users\gabri\Desktop\prova 50\sito` se non per i link/contatti concordati; e' un progetto separato.
 
 ## Prima di dichiarare finito
 
 - [ ] `python generatore\publish_check.py` passa
-- [ ] la pagina si apre a 390px senza scorrimento orizzontale
-- [ ] il PDF esce a 2 pagine A4
-- [ ] l'anteprima si vede bene come anteprima di link
+- [ ] demo confronto mostra tabella, semafori, verdetto corretto e domande
+- [ ] pagina leggibile a 390px senza scroll orizzontale
+- [ ] `verdetto.pdf` esce in 1 pagina A4; PDF proposte in 2 pagine
+- [ ] nessun dato reale in repo pubblico

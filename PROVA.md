@@ -1,117 +1,83 @@
-# PROVA - Scelta24 in 5 passi
+# PROVA - Scelta24 (confronto preventivi) in 5 passi
 
-Usa questa guida per vedere il progetto come lo vedra' il cliente finale.
-Tempo: 5-10 minuti. Meglio dal **telefono** (e' li' che si apre la proposta).
+Scelta24 aiuta il **committente finale** a scegliere tra piu' preventivi/contratti: confronto riga per riga, costo reale, semafori di rischio e verdetto. Il risultato e' controllato da una persona prima di arrivare.
 
----
-
-## Prima di iniziare
-
-1. Assicurati di avere Python installato (`python --version`).
-2. (Opzionale ma consigliato) Chiudi Chrome per risultati piu' stabili nella generazione di PDF/anteprima.
-3. Apri un terminale nella cartella del progetto: `C:\Users\gabri\Desktop\prova 50 - clienti`
+Tempo: 5-10 minuti. Meglio dal **telefono**.
 
 ---
 
-## 1) Apri la demo sul telefono (wifi di casa)
+## 1) Apri l'esempio dal vivo (dal telefono)
 
-Nel terminale:
-
+Sul PC, nella cartella `C:\Users\gabri\Desktop\prova 50 - clienti`:
 ```powershell
 python generatore\serve.py
 ```
-
-Il comando stampa due indirizzi. Sul telefono, collegato allo **stesso wifi** del PC, apri quello di rete, ad esempio:
-
-- `http://192.168.1.34:8000/demo-edilcasa/`
-- `http://192.168.1.34:8000/demo-serramenti/`
+Sul telefono (stesso wifi) apri l'URL di rete stampato, poi:
+- `http://<IP>:8000/confronto-demo-bagno/` — il confronto dimostrativo (caso "wow")
+- `http://<IP>:8000/` — la landing
 
 **Cosa controllare:**
-- la pagina si legge bene, niente scroll orizzontale
-- le 3 opzioni (Base, Consigliata, Completa) sono chiare
-- il pulsante **"Scelgo l'opzione"** apre la mail con testo gia' pronto
-- in fondo c'e' la fascia **"Questa e' una proposta dimostrativa... Parliamone"** che porta ai contatti
+- il verdetto dice "Scegli EdilCasa..." anche se BagnoExpress costa meno sulla carta
+- tabella con prezzo dichiarato, **costo reale**, voci mancanti
+- semafori rosso/giallo/verde e domande da fare alle aziende
+- nessuno scroll orizzontale a 390px
 
 ---
 
-## 2) Guarda l'anteprima del link (come su WhatsApp)
+## 2) Guarda l'anteprima del link e il PDF verdetto
 
-Quando condividi il link, WhatsApp/email mostra un'anteprima (titolo, testo, immagine). Per simularla:
-- apri `https://gabriruss1.github.io/scelta24/demo-edilcasa/` e incolla il link in una chat con te stesso, oppure
-- controlla il file `demo-edilcasa/og.png` (immagine 1200x630).
+- Anteprima: `confronto-demo-bagno/og.png` (oppure incolla il link live in una chat)
+- PDF: `confronto-demo-bagno/verdetto.pdf`
 
-**Cosa controllare:** il titolo e l'immagine fanno capire che e' "una proposta su 3 opzioni" e portano il nome Scelta24/azienda.
+**Cosa controllare:** il PDF e' di 1 pagina A4, mostra verdetto e tabella sintetica; il link/anteprima comunica "confronto preventivi, costo reale, verdetto".
 
 ---
 
-## 3) Stampa il PDF e guarda il QR
+## 3) Prova la CTA "Invia i tuoi preventivi"
 
-Apri il PDF della demo:
-- `demo-edilcasa/Proposta-edilcasa-di-gabriele-romano-2026-114.pdf`
+Dalla landing o dal confronto demo clicca **"Invia i tuoi preventivi"**: deve aprire
+`https://gabriruss1.github.io/preventivi24/contatti.html?servizio=confronto`.
 
 **Cosa controllare:**
-- il PDF e' di **2 pagine A4**, leggibile
-- in fondo alla pagina 2 c'e' il **QR** che punta alla proposta online
-- il riquadro riassuntivo mostra le 3 opzioni e quella consigliata
+- oggetto/titolo orientati al confronto ("Confronto preventivi — Scelta24")
+- campo "Tipo di lavoro" visibile
+- messaggio chiede di allegare/inviare i PDF
+- nota privacy: documenti non pubblicati, non usati per addestrare modelli, eliminati dopo la consegna
 
-(Se il PDF non si genera, verifica che Google Chrome/Edge sia installato: il generatore lo usa in modalita' headless.)
-
----
-
-## 4) Clicca "Scelgo l'opzione" e guarda cosa parte
-
-Sulla pagina demo, clicca **Scelgo l'opzione** su una delle tre schede.
-
-**Cosa controllare:**
-- si apre il client di posta (`mailto:`) indirizzato a `russo.enterprise.biz@gmail.com`
-- oggetto: "Vorrei la mia proposta a 3 opzioni - Preventivi24"
-- testo gia' compilato: chiede una proposta per la propria attivita' (non "scelgo Base/Comfort" del finto cliente)
-
-> Nota: WhatsApp e' rimandato. Quando ci sara' `azienda.whatsapp` nel JSON, lo stesso pulsante aprira' WhatsApp invece della mail.
+> Nota: l'invio effettivo via FormSubmit va verificato con un test reale (vedi punto 5).
 
 ---
 
-## 5) Prova completa con un cliente finto (brand diverso)
+## 4) Verifica le griglie di completezza (il vantaggio)
 
-Genera una proposta nuova per "Vetreria Sole" (verde/blu, azienda diversa dalle demo):
+Apri:
+- `conoscenza/bagno.json`
+- `conoscenza/serramenti.json`
 
-```powershell
-python generatore\prova.py
-```
-
-Il comando:
-- crea la proposta in `prova-output/prova-vetreria-sole/`
-- genera pagina + `og.png` + PDF
-- apre il browser sulla pagina
-- stampa i percorsi dei file
-
-Poi, per aprirla dal telefono:
-
-```powershell
-python generatore\serve.py --dir prova-output
-```
-
-e apri `http://<IP-stampato>:8000/prova-vetreria-sole/` dal telefono.
-
-**Cosa controllare:** colori e nome sono di Vetreria Sole, ma struttura e pulsanti sono gli stessi. Questo dimostra che **ogni cliente ha il suo brand con lo stesso motore**.
+**Cosa controllare:** voci obbligatorie, extra frequenti e "trappole" (impermeabilizzazione, caparra, garanzia, tempi vaghi, IVA). Sono queste che permettono di dire "costo reale" e non solo "dipende".
 
 ---
 
-## Verifica automatica (opzionale)
-
-Dalla root del progetto:
+## 5) Rigenera e controlla (e form end-to-end)
 
 ```powershell
+python generatore\analizza.py analisi\confronto-demo-bagno
+python generatore\genera_proposta.py proposte\demo-edilcasa --pubblico --robots "index, follow"
+python generatore\genera_proposta.py proposte\demo-serramenti --pubblico --robots "index, follow"
 python generatore\build_site.py
 python generatore\publish_check.py
 ```
+`publish_check.py` deve terminare con **PUBLISH CHECK OK**.
 
-`publish_check.py` deve terminare con `PUBLISH CHECK OK`.
+**Form end-to-end (da fare una volta, richiede conferma):** invia un messaggio di test da `https://gabriruss1.github.io/preventivi24/contatti.html?servizio=confronto` e verifica che arrivi a `russo.enterprise.biz@gmail.com`.
 
 ---
 
-## Note
+## Flusso operativo (gratis, zero costi API)
 
-- Le demo pubblicate sono fittizie e indicizzabili. Le **proposte reali** non vanno nel repo pubblico (gate privacy attivo, deploy previsto su Cloudflare Pages).
-- Cloudflare Pages (proposte reali, link privati): richiede `npx wrangler login` una volta (account esistente). Vedi `docs/passo-passo-per-il-cliente-b2b.md`.
-- Se qualcosa non torna, i file generati sono in `demo-edilcasa/`, `demo-serramenti/` e `prova-output/`.
+1. Il committente invia i PDF dal form/email.
+2. L'assistente legge i documenti e compila `analisi/<slug>/analisi.json` usando `conoscenza/<tipo>.json` (vedi `docs/come-analizzare.md`).
+3. Si genera il report: `python generatore\analizza.py analisi\<slug> --out out` (fuori dal repo pubblico se dati reali).
+4. **Gabriele controlla** numeri e verdetto, poi lo invia. I documenti vengono eliminati dopo la consegna.
+
+Le analisi con dati reali **non** vanno nel repo pubblico (`analisi/*` ignorato, tranne la demo). Cloudflare Pages per link privati: dopo `npx wrangler login` (Fase B).

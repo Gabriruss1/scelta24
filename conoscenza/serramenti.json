@@ -1,0 +1,39 @@
+{
+  "tipo": "serramenti",
+  "nome": "Sostituzione serramenti",
+  "descrizione": "Griglia di completezza per confrontare preventivi di sostituzione infissi. Derivata dalla struttura Base/Consigliata/Completa usata nei nostri preventivi.",
+  "voci_obbligatorie": [
+    { "voce": "Rilievo misure e sopralluogo", "perche": "Senza rilievo il prezzo e' una stima: le aperture fuori standard costano di piu'.", "peso": 2 },
+    { "voce": "Fornitura infissi con caratteristiche termiche e acustiche dichiarate", "perche": "Senza valori Uw e Rw non si puo' confrontare l'isolamento: 'buono' non e' un dato.", "peso": 3 },
+    { "voce": "Rimozione e smaltimento dei vecchi infissi", "perche": "Se manca, resta a carico del committente.", "peso": 2 },
+    { "voce": "Posa con schiuma, nastro su tre lati e sigillatura", "perche": "La posa conta quanto il vetro: un infisso premium posato male non isola.", "peso": 3 },
+    { "voce": "Collaudo apertura per apertura", "perche": "E' la prova che il lavoro e' stato fatto bene: va chiesto per iscritto.", "peso": 2 },
+    { "voce": "Trasporto, scarico e montaggio", "perche": "Voce spesso omessa nei prezzi 'a partire da'.", "peso": 2 }
+  ],
+  "voci_opzionali": [
+    { "voce": "Cassonetti coibentati e avvolgibili nuovi", "perche": "Incide sul risparmio energetico: se uno li include e l'altro no, il confronto e' falso." },
+    { "voce": "Zanzariere", "perche": "Da quantificare: '4 aperture' non equivale a '7 aperture'." },
+    { "voce": "Persiane, scuretti e parte esterna", "perche": "La parte esterna e' spesso esclusa: va messa nel confronto." },
+    { "voce": "Controtelai e soglie", "perche": "Se mancano, il lavoro finisce con un costo extra." },
+    { "voce": "Pratica e asseverazione per detrazione fiscale", "perche": "Se non e' gestita, il committente se la fa e la paga." }
+  ],
+  "extra_frequenti": [
+    "Ponteggio richiesto dal condominio",
+    "Opere murarie oltre il ripristino ordinario",
+    "Modifiche al progetto dopo la firma",
+    "Tende, arredi e climatizzatori",
+    "Ripristino intonaco interno"
+  ],
+  "trappole": [
+    { "clausola": "Vetro definito solo come 'doppio' o 'triplo'", "perche": "Senza valori di trasmittanza non e' confrontabile: chiedi scheda tecnica.", "livello": "rosso" },
+    { "clausola": "Posa non descritta", "perche": "E' la causa numero uno di infiltrazioni e condensate dopo la sostituzione.", "livello": "rosso" },
+    { "clausola": "Risparmio in bolletta dichiarato senza fonte", "perche": "Le stime vanno calcolate su metratura e zona climatica, non promesse.", "livello": "giallo" },
+    { "clausola": "Consegna senza data, solo un intervallo vago", "perche": "Va scritta una data o un limite massimo, non solo '5-6 settimane'.", "livello": "giallo" },
+    { "clausola": "Pagamento quasi tutto prima della posa", "perche": "Lasciare solo il 10% a collaudo toglie ogni leva se il lavoro non torna.", "livello": "rosso" },
+    { "clausola": "Garanzia sulla posa inferiore a 2 anni", "perche": "E' il minimo legale: meno significa rinunciare a un diritto.", "livello": "rosso" }
+  ],
+  "detrazioni": "Risparmio energetico: detrazioni previste dalla normativa vigente (verificare aliquota e requisiti per l'anno di riferimento). La pratica va gestita e documentata.",
+  "tempi_tipici": "5-6 settimane dalla conferma, posa in 3-5 giorni.",
+  "caparre_tipiche": "30% alla conferma, 60% prima della posa, 10% a collaudo.",
+  "fonte": "Struttura Base/Consigliata/Completa dei nostri preventivi (demo-serramenti) e voci standard di mercato."
+}

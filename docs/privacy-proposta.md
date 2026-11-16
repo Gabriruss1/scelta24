@@ -1,7 +1,8 @@
-# Privacy e GDPR — le proposte a 3 opzioni
+# Privacy e GDPR — Scelta24 (proposte e confronti)
 
-Documento interno, da conservare. Vale per la pagina di proposta pubblicata
-dal progetto gemello (`prova 50 - clienti`).
+Documento interno, da conservare. Vale per le pagine pubblicate dal progetto
+gemello (`prova 50 - clienti`): sia le proposte a 3 opzioni, sia i confronti
+dimostrativi/assistiti di preventivi e contratti.
 
 ---
 
@@ -9,13 +10,11 @@ dal progetto gemello (`prova 50 - clienti`).
 
 | Soggetto | Ruolo | Dati |
 |---|---|---|
-| **Il cliente B2B** (es. un serramentista) | **Titolare** | i dati del proprio committente finale, i propri prezzi, il proprio listino |
-| **Gabriele Russo** (Preventivi24) | **Fornitore tecnico / responsabile esterno** | i dati tecnici necessari a ospitare e generare la proposta |
-| Il committente finale | **Interessato** | nome, indirizzo, dati dell'intervento |
+| **Il cliente B2B** (es. un serramentista) | **Titolare** | i dati del proprio committente finale, i propri prezzi, il proprio listino (proposte a 3 opzioni) |
+| **Il committente finale che chiede un confronto** | **Interessato / richiedente** | i preventivi e i contratti che invia per essere confrontati |
+| **Gabriele Russo** (Preventivi24/Scelta24) | **Fornitore tecnico / responsabile del servizio** | i dati necessari a produrre il confronto e consegnare il verdetto |
 
-Il cliente B2B resta il titolare: e' lui che ha il rapporto con il proprio
-cliente, e il suo cliente finale e' suo. Noi non decidiamo perche' il trattamento
-avvenga: lo ospitiamo.
+Per le proposte B2B il titolare resta il cliente B2B. Per i confronti richiesti dal committente finale, i documenti vengono trattati solo per rispondere alla richiesta (analisi, verdetto, domande da inviare).
 
 **Da fare:** un incarico (DPA) semplice da far firmare al cliente B2B, con
 l'impegno a non usare i dati per altro. Modello pronto in
@@ -118,3 +117,17 @@ Da aggiungere con la prima proposta reale:
 
 - `docs/incarico-fornitore-trattamento.md` — DPA per il cliente B2B
 - la riga del committente finale in `privacy-proposta.md` (registro)
+
+---
+
+## 7. Confronti di preventivi e contratti (servizio al committente finale)
+
+Quando un committente invia preventivi/contratti per un confronto:
+
+- **Finalita'**: produrre il confronto, il verdetto e le domande da inviare alle aziende, come richiesto.
+- **Minimizzazione**: si usano solo i dati necessari presenti nei documenti.
+- **Nessuna pubblicazione**: i documenti e le analisi con dati reali **non** finiscono nel repository pubblico. Solo i confronti dimostrativi (`demo: true`) possono essere pubblicati.
+- **Nessun addestramento**: i documenti non vengono usati per addestrare modelli di intelligenza artificiale.
+- **Controllo umano**: il risultato viene verificato da una persona prima della consegna.
+- **Conservazione**: i documenti vengono eliminati dopo la consegna del confronto, salvo diverso accordo scritto. Le analisi reali si generano fuori dal repo (`--out out`) e si condividono in modo riservato.
+- **Limitazioni**: il confronto e' un supporto alla decisione basato sui documenti forniti; non sostituisce sopralluogo, perizia tecnica o consulenza legale. Le stime delle voci mancanti sono indicate come tali.

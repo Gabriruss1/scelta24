@@ -2,13 +2,18 @@
 out/
 *.pdf.tmp
 
-# --- proposte reali: NON vanno mai nel repo pubblico ---
-# le proposte con dati veri si generano fuori dal repo (--out out) e si
+# --- proposte e analisi reali: NON vanno mai nel repo pubblico ---
+# i dati veri si generano fuori dal repo (--out out) e si
 # pubblicano su Cloudflare Pages. Se per errore una cartella reale finisce
 # qui, il publish_check lo segnala ma il file resterebbe pubblico:
 # meglio escludere tutto quello che non e' demo.
 proposte/*/images/
 proposte/*/*.pdf
+
+# analisi: tieni solo la demo pubblica versionata (confronto-demo-bagno)
+analisi/*
+!analisi/confronto-demo-bagno/
+!analisi/confronto-demo-bagno/**
 
 # --- python ---
 __pycache__/

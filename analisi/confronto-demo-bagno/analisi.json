@@ -1,0 +1,125 @@
+{
+  "slug": "confronto-demo-bagno",
+  "demo": true,
+  "titolo": "Confronto preventivi — Ristrutturazione bagno completo",
+  "descrizione": "Confronto dimostrativo tra due preventivi per lo stesso bagno: costo reale, voci mancanti, rischi e verdetto.",
+  "intervento": "Ristrutturazione completa del bagno principale (6,5 mq)",
+  "luogo": "Palermo",
+  "data": "16 novembre 2026",
+  "riferimento": "DEMO-C-01",
+  "tipo": "bagno",
+  "preventivi": [
+    {
+      "id": "A",
+      "azienda": "EdilCasa di Gabriele Romano",
+      "prezzo_dichiarato": 12460,
+      "iva": "10% agevolata",
+      "prezzo_con_iva": 13706,
+      "caparra": "30% alla conferma, 40% a impianti posati, 30% a collaudo",
+      "tempi": "14 giorni lavorativi, consegna 4 settimane",
+      "garanzia": "2 anni opere e impianti, 10 anni impermeabilizzazione",
+      "voci_incluse": [
+        "Demolizione e smaltimento autorizzato",
+        "Massetto e impermeabilizzazione in 2 strati",
+        "Impianto idrico ed elettrico nuovi, collaudo in pressione",
+        "Sanitari sospesi e doccia walk-in con colonna termostatica",
+        "Scaldasalviette, mobile 90 cm e specchio LED",
+        "Isolamento acustico parete vasca e ventilazione meccanica",
+        "Pulizia finale e collaudo con prova di tenuta"
+      ],
+      "voci_mancanti": [],
+      "esclusioni": [
+        "Opere murarie oltre il ripristino ordinario",
+        "Arredi e accessori non elencati"
+      ],
+      "costo_reale": 13706,
+      "note": "Prezzo tutto incluso per il livello Comfort. Pratica CILA/detrazione a carico del committente (opzione Completa la include)."
+    },
+    {
+      "id": "B",
+      "azienda": "BagnoExpress Ristrutturazioni",
+      "prezzo_dichiarato": 9800,
+      "iva": "Non specificata nel preventivo",
+      "prezzo_con_iva": 10780,
+      "caparra": "50% alla firma, saldo a fine lavori",
+      "tempi": "Circa 10-12 giorni (indicativi, salvo disponibilita' materiali)",
+      "garanzia": "1 anno sulla posa",
+      "voci_incluse": [
+        "Demolizione e posa rivestimenti",
+        "Sanitari standard a pavimento",
+        "Piatto doccia e box",
+        "Allacci idraulici esistenti"
+      ],
+      "voci_mancanti": [
+        "Impermeabilizzazione del massetto (stimata 1.800 EUR)",
+        "Pratica CILA e asseverazione detrazione 50% (stimata 600 EUR)",
+        "Sanitari sospesi con cassetta da incasso (differenza stimata 900 EUR)",
+        "Collaudo in pressione e collaudo finale scritti"
+      ],
+      "esclusioni": [
+        "Impermeabilizzazione",
+        "Pratiche edilizie e detrazioni",
+        "Impianto elettrico (da verificare)",
+        "Materiali extra e opere impreviste"
+      ],
+      "costo_reale": 14080,
+      "note": "Il prezzo piu' basso nasconde 3.300 EUR di voci mancanti stimate. Caparra alta, tempi non vincolanti e garanzia ridotta aumentano il rischio."
+    }
+  ],
+  "semafori": [
+    {
+      "criterio": "Impermeabilizzazione",
+      "livello": "rosso",
+      "testo": "Manca nel preventivo B. E' la voce piu' costosa da recuperare dopo: senza di essa il rischio di infiltrazioni e rifacimento e' alto (costo stimato 1.800 EUR)."
+    },
+    {
+      "criterio": "Caparra e pagamenti",
+      "livello": "rosso",
+      "testo": "Il preventivo B chiede il 50% alla firma: su un'impresa non verificata e' il rischio piu' grande per il committente. A chiede il 30% con saldo legato al collaudo."
+    },
+    {
+      "criterio": "Garanzia",
+      "livello": "giallo",
+      "testo": "B dichiara 1 anno sulla posa, sotto il minimo legale di 2 anni sulle opere. A offre 2 anni su opere/impianti e 10 anni sull'impermeabilizzazione."
+    },
+    {
+      "criterio": "Tempi",
+      "livello": "giallo",
+      "testo": "B indica tempi 'circa' e 'salvo disponibilita' materiali: non vincolanti. A indica 14 giorni lavorativi e 4 settimane di consegna."
+    },
+    {
+      "criterio": "Costo reale a parita' di lavoro",
+      "livello": "verde",
+      "testo": "A parita' di voci essenziali, A costa 13.706 EUR contro circa 14.080 EUR stimati per B. Il preventivo piu' economico sulla carta risulta piu' caro e piu' rischioso."
+    },
+    {
+      "criterio": "Detrazione e pratiche",
+      "livello": "giallo",
+      "testo": "B non menziona CILA ne' asseverazione: se servono, il costo ricade sul committente. A le offre come opzione (livello Completa) o le lascia esplicite."
+    }
+  ],
+  "verdetto": {
+    "scelta": "A",
+    "titolo": "Scegli EdilCasa di Gabriele Romano",
+    "perche": "Il preventivo B costa 2.660 EUR in meno sulla carta, ma esclude impermeabilizzazione, pratica CILA e sanitari sospesi (circa 3.300 EUR di voci mancanti stimate), chiede il 50% di caparra e offre garanzia ridotta. A parita' di lavoro, A costa meno nel reale ed e' piu' sicuro.",
+    "punti": [
+      "Costo reale stimato: 13.706 EUR (A) contro circa 14.080 EUR (B) a parita' di voci essenziali.",
+      "A include impermeabilizzazione, collaudi e impianti nuovi: le voci che costano di piu' da recuperare.",
+      "Pagamenti piu' protettivi in A (30/40/30 con collaudo) rispetto al 50% alla firma di B.",
+      "Garanzia e tempi sono scritti e verificabili in A; in B sono ridotti o non vincolanti."
+    ],
+    "costo_reale_scelto": 13706,
+    "costo_reale_altro": 14080,
+    "risparmio": "374 EUR in meno + rischio evitato"
+  },
+  "domande": [
+    { "azienda": "BagnoExpress Ristrutturazioni", "domanda": "L'impermeabilizzazione del massetto e' inclusa? Con quali materiali e in quanti strati?" },
+    { "azienda": "BagnoExpress Ristrutturazioni", "domanda": "Chi gestisce la pratica CILA e l'asseverazione per la detrazione 50%? Il costo e' incluso?" },
+    { "azienda": "BagnoExpress Ristrutturazioni", "domanda": "La caparra del 50% alla firma e' vincolante? E' possibile ridurla e legare il saldo al collaudo?" },
+    { "azienda": "BagnoExpress Ristrutturazioni", "domanda": "La garanzia sulla posa e' di 1 anno: potete portarla almeno a 2 anni come previsto per le opere?" },
+    { "azienda": "BagnoExpress Ristrutturazioni", "domanda": "I tempi sono vincolanti o solo indicativi? Cosa succede in caso di ritardo o materiali non disponibili?" },
+    { "azienda": "EdilCasa di Gabriele Romano", "domanda": "Potete includere anche la gestione della pratica CILA/detrazione (livello Completa) nel preventivo finale?" }
+  ],
+  "metodo": "Analisi dimostrativa basata sulle voci dichiarate nei preventivi e sulla griglia di completezza Scelta24 per la ristrutturazione bagno. I costi delle voci mancanti sono stime di mercato e vanno confermati con un sopralluogo. Il verdetto considera prezzo, completezza, rischi contrattuali, tempi e garanzie. Controllato da una persona prima della pubblicazione.",
+  "nota": "Confronto dimostrativo con dati di esempio. I prezzi reali dipendono dal sopralluogo e dal listino di chi esegue il lavoro."
+}

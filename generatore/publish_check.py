@@ -67,18 +67,25 @@ def controlla_pattern():
     return problemi
 
 
+def cartelle_pubblicate():
+    esclusi = {"assets", "kit", "generatore", "proposte", "docs", "images", ".git",
+               ".opencode", ".github", "conoscenza", "analisi", "prova-output", "_chk"}
+    trovate = []
+    for d in sorted(os.listdir(ROOT)):
+        cartella = os.path.join(ROOT, d)
+        if (os.path.isdir(cartella) and os.path.exists(os.path.join(cartella, "index.html"))
+                and not d.startswith(".") and d not in esclusi):
+            trovate.append(d)
+    return trovate
+
+
 def controlla_proposte():
-    """Ogni proposta deve avere meta robots, anteprima, PDF e link interni sani."""
+    """Ogni pagina pubblicata deve avere meta robots, anteprima, PDF e link interni sani."""
     problemi = []
-    proposte = [d for d in sorted(os.listdir(ROOT))
-                if os.path.isdir(os.path.join(ROOT, d))
-                and os.path.exists(os.path.join(ROOT, d, "index.html"))
-                and not d.startswith(".") and d not in ("assets", "kit", "generatore",
-                                                        "proposte", "docs", "images", ".git",
-                                                        ".opencode", ".github")]
-    if not proposte:
-        problemi.append("nessuna proposta generata: lancia prima il generatore")
-    for slug in proposte:
+    pagine = cartelle_pubblicate()
+    if not pagine:
+        problemi.append("nessuna pagina generata: lancia prima i generatori")
+    for slug in pagine:
         cartella = os.path.join(ROOT, slug)
         indice = os.path.join(cartella, "index.html")
         with open(indice, "r", encoding="utf-8") as f:
@@ -88,7 +95,7 @@ def controlla_proposte():
             problemi.append("%s: manca il meta robots" % slug)
 
         if not os.path.exists(os.path.join(cartella, "og.png")):
-            problemi.append("%s: manca l'anticipa og.png" % slug)
+            problemi.append("%s: manca l'anteprima og.png" % slug)
 
         if not glob.glob(os.path.join(cartella, "*.pdf")):
             problemi.append("%s: manca il PDF" % slug)
@@ -171,17 +178,20 @@ def controlla_sitemap():
 
 
 def controlla_noindex():
-    """Le proposte reali non devono finire nella sitemap ne' essere indicizzate."""
+    """Le proposte e analisi reali non devono finire nella sitemap ne' essere indicizzate."""
     problemi = []
     percorso = os.path.join(ROOT, "sitemap.xml")
-    if not os.path.exists(percorso):
-        return problemi
+    sitemap_txt = ""
+    if os.path.exists(percorso):
+        with open(percorso, "r", encoding="utf-8") as f:
+            sitemap_txt = f.read()
+
     for percorso_json in sorted(glob.glob(os.path.join(ROOT, "proposte", "*", "proposta.json"))):
         with open(percorso_json, "r", encoding="utf-8-sig") as f:
             dati = json.load(f)
         if dati.get("demo"):
             continue
-        slug = dati.get("slug")
+        slug = dati.get("slug") or os.path.basename(os.path.dirname(percorso_json))
         indice = os.path.join(ROOT, slug, "index.html")
         if not os.path.exists(indice):
             continue
@@ -190,10 +200,28 @@ def controlla_noindex():
         m = re.search(r'<meta name="robots" content="([^"]+)"', contenuto)
         if not m or "noindex" not in m.group(1):
             problemi.append("%s: proposta reale senza noindex" % slug)
-        if os.path.exists(percorso):
-            with open(percorso, "r", encoding="utf-8") as f:
-                if slug in f.read():
-                    problemi.append("%s: proposta reale presente in sitemap.xml" % slug)
+        if sitemap_txt and ("/%s/" % slug) in sitemap_txt:
+            problemi.append("%s: proposta reale presente in sitemap.xml" % slug)
+
+    # analisi: solo le demo possono essere pubblicate nel repo
+    for percorso_json in sorted(glob.glob(os.path.join(ROOT, "analisi", "*", "analisi.json"))):
+        with open(percorso_json, "r", encoding="utf-8-sig") as f:
+            dati = json.load(f)
+        slug = dati.get("slug") or os.path.basename(os.path.dirname(percorso_json))
+        indice = os.path.join(ROOT, slug, "index.html")
+        if dati.get("demo"):
+            if os.path.exists(indice):
+                with open(indice, "r", encoding="utf-8") as f:
+                    contenuto = f.read()
+                m = re.search(r'<meta name="robots" content="([^"]+)"', contenuto)
+                if not m or "index" not in m.group(1):
+                    problemi.append("%s: confronto demo dovrebbe essere indicizzabile" % slug)
+            continue
+        # non demo: non deve esserci cartella pubblicata ne' in sitemap
+        if os.path.exists(indice):
+            problemi.append("%s: analisi reale pubblicata nel repo (rimuovi la cartella generata)" % slug)
+        if sitemap_txt and ("/%s/" % slug) in sitemap_txt:
+            problemi.append("%s: analisi reale presente in sitemap.xml" % slug)
     return problemi
 
 

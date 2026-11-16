@@ -34,28 +34,29 @@ KIT_LANDING_TMPL = os.path.join(KIT, "landing.html.tmpl")
 KIT_TOKENS = os.path.join(KIT, "tokens.css")
 
 URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
+URL_CONTATTO = "https://gabriruss1.github.io/preventivi24/contatti.html?servizio=confronto"
 
 FAQ = [
-    ("Perche' un preventivo con un solo prezzo perde lavori?",
-     "Perche' il cliente non ha niente da confrontare: mette il tuo totale accanto a quello "
-     "del concorrente e vince chi costa meno. Con tre livelli dello stesso lavoro confronta "
-     "il valore, e il prezzo torna a essere una variabile fra le altre."),
-    ("La fascia consigliata deve essere la piu' cara?",
-     "No, e non deve esserlo. E' quella che risolve il problema con il rapporto migliore tra "
-     "valore e prezzo. Il metodo prevede di scriverlo per iscritto in una riga: se la riga "
-     "non convince, la fascia e' sbagliata."),
-    ("Cambia il lavoro che faccio?",
-     "No. Cambia solo la presentazione. Il sopralluogo, il listino, i materiali e la "
-     "esecuzione restano tuoi. I tre livelli si ricavano da quello che gia' vendi, non "
-     "da un listario inventato."),
-    ("Che cosa riceve il cliente finale?",
-     "Una proposta che si apre dal telefono o dal computer: tre opzioni con prezzo, tempi e "
-     "voci incluse, una tabella di confronto e la sua scelta in un tocco. Resta valida "
-     "fino alla data indicata."),
-    ("I miei prezzi restano riservati?",
-     "Le proposte reali non sono indicizzate e non finiscono in nessun elenco pubblico: "
-     "si aprono solo con il link che ricevi. Gli esempi pubblici di questo sito usano dati "
-     "dimostrativi."),
+    ("Come faccio a confrontare due o tre preventivi?",
+     "Mettili uno accanto all'altro sulla stessa tabella: prezzo dichiarato, IVA, cosa e' incluso, "
+     "cosa manca, tempi, caparra e garanzia. Il preventivo piu' basso sulla carta spesso esclude "
+     "voci che poi paghi a parte. Scelta24 fa questo confronto riga per riga e ti mostra il costo reale."),
+    ("Cosa controllare in un preventivo di ristrutturazione o lavori in casa?",
+     "Controlla che ci siano demolizione e smaltimento, impermeabilizzazione, impianti con collaudo, "
+     "materiali specificati, tempi scritti, garanzia e condizioni di pagamento. Se una voce e' vaga "
+     "o manca, chiedila per iscritto prima di firmare."),
+    ("Come si capisce qual e' il preventivo piu' conveniente davvero?",
+     "Non basta il prezzo: conta il costo reale. Aggiungi le voci mancanti, verifica IVA e detrazioni, "
+     "guarda caparra, garanzia e tempi. Un preventivo piu' economico puo' costare di piu' se esclude "
+     "lavori essenziali o scarica rischi su di te."),
+    ("Chi gestisce la detrazione fiscale e la pratica CILA?",
+     "Dipende dal preventivo: alcuni la includono, altri la lasciano a tuo carico. Va scritto in modo "
+     "chiaro perche' ha un costo e serve per la detrazione. Se non e' indicato, e' una domanda da fare "
+     "all'azienda prima di scegliere."),
+    ("I miei documenti sono al sicuro?",
+     "I preventivi e i contratti che ci invii servono solo per il confronto. Non finiscono in un "
+     "repository pubblico, non vengono usati per addestrare modelli e vengono eliminati dopo la consegna. "
+     "Il risultato viene controllato da una persona prima di arrivarti."),
 ]
 
 
@@ -102,17 +103,28 @@ def cerca_proposte(out_root):
     return trovate
 
 
-def costruisci_carte(proposte):
+def costruisci_carte(proposte, out_root):
     carte = []
+    # confronto demo in evidenza, se presente
+    confronto = os.path.join(out_root, "confronto-demo-bagno")
+    if os.path.isdir(confronto) and os.path.exists(os.path.join(confronto, "index.html")):
+        img = '<img class="esempio__img" src="confronto-demo-bagno/og.png" alt="Anteprima del confronto dimostrativo" loading="lazy">'
+        carte.append(
+            '<a class="esempio" href="confronto-demo-bagno/">%s'
+            '<div class="esempio__corpo"><span>Confronto dimostrativo</span>'
+            '<h3>Bagno: preventivo piu\' basso vs costo reale</h3>'
+            '<p>Tabella riga per riga, semafori di rischio e verdetto: il piu\' economico non vince.</p></div></a>'
+            % img
+        )
     for p in proposte:
         if not p["indicizzabile"]:
             continue
         img = ("<img class=\"esempio__img\" src=\"%s/og.png\" alt=\"Anteprima della proposta %s\" loading=\"lazy\">"
                % (esc(p["slug"]), esc(p["slug"])))
         carte.append(
-            '<a class="esempio" href="%s/index.html">%s'
-            '<div class="esempio__corpo"><span>Esempio reale</span>'
-            "<h3>%s</h3><p>Si apre su telefono, con le tre opzioni affiancate.</p></div></a>"
+            '<a class="esempio" href="%s/">%s'
+            '<div class="esempio__corpo"><span>Esempio di proposta</span>'
+            "<h3>%s</h3><p>Tre livelli affiancati: Base, Consigliata, Completa.</p></div></a>"
             % (esc(p["slug"]), img, esc(p["titolo"]))
         )
     if not carte:
@@ -148,14 +160,14 @@ body{width:1200px;height:630px;background:#0F1729;color:#F5F0E8;font-family:"Seg
   display:flex;flex-direction:column;justify-content:space-between;padding:70px 72px;overflow:hidden;position:relative}
 body::after{content:"";position:absolute;right:-120px;bottom:-160px;width:520px;height:520px;border-radius:50%;background:#E8A838;opacity:.14}
 .kick{font-size:24px;letter-spacing:.18em;text-transform:uppercase;color:#E8A838;font-weight:700;margin-bottom:24px}
-h1{font-size:68px;line-height:1.04;font-weight:600;letter-spacing:-.02em;max-width:940px}
+h1{font-size:66px;line-height:1.05;font-weight:600;letter-spacing:-.02em;max-width:940px}
 h1 em{font-style:normal;color:#E8A838}
-h2{font-size:30px;font-weight:400;opacity:.8;margin-top:26px;max-width:820px;line-height:1.35}
-.foot{font-size:24px;opacity:.6;position:relative;letter-spacing:.04em}
+h2{font-size:30px;font-weight:400;opacity:.85;margin-top:26px;max-width:860px;line-height:1.35}
+.foot{font-size:24px;opacity:.65;position:relative;letter-spacing:.04em}
 </style></head><body>
-<div><div class="kick">Il metodo del preventivo a 3 opzioni</div>
-<h1>Un preventivo, tre livelli. Il cliente sceglie il <em>valore</em>.</h1>
-<h2>Base, Consigliata e Completa: prezzi, tempi e cosa e' incluso. Con la fascia consigliata in evidenza.</h2></div>
+<div><div class="kick">Confronto preventivi</div>
+<h1>Confronta i preventivi. Scegli quello <em>giusto</em>.</h1>
+<h2>Costo reale, voci mancanti, rischi e verdetto. Gratis, controllato da una persona prima di arrivarti.</h2></div>
 <div class="foot">Scelta24 &middot; un servizio Preventivi24</div>
 </body></html>"""
 
@@ -192,7 +204,7 @@ def costruisci_jsonld(url_base):
                 "name": "Scelta24",
                 "url": url_base + "/",
                 "inLanguage": "it-IT",
-                "description": "Il metodo del preventivo a 3 opzioni: Base, Consigliata, Completa.",
+                "description": "Confronto preventivi e contratti: costo reale, voci mancanti, rischi e verdetto. Un servizio Preventivi24.",
                 "publisher": {
                     "@type": "Organization",
                     "name": "Preventivi24",
@@ -236,7 +248,8 @@ def main():
     for sorgente, nome in ((os.path.join(KIT, "proposta.css"), "proposta.css"),
                            (os.path.join(KIT, "proposta.js"), "proposta.js"),
                            (KIT_TOKENS, "tokens.css"),
-                           (KIT_LANDING_CSS, "landing.css")):
+                           (KIT_LANDING_CSS, "landing.css"),
+                           (os.path.join(KIT, "confronto.css"), "confronto.css")):
         if os.path.exists(sorgente):
             shutil.copyfile(sorgente, os.path.join(assets_dir, nome))
 
@@ -245,23 +258,24 @@ def main():
         piano = ('<script defer data-domain="%s" src="https://plausible.io/js/script.js"></script>'
                  % args.plausible)
 
-    titolo = "Scelta24 — Il preventivo a 3 opzioni: Base, Consigliata, Completa"
-    descrizione = ("Come si presenta un preventivo con tre livelli invece di un solo prezzo. "
-                   "Esempi reali di proposte su tre opzioni per aziende e committenti finali.")
+    titolo = "Scelta24 — Confronta i preventivi e scegli quello giusto"
+    descrizione = ("Hai due o tre preventivi sul tavolo? Scelta24 li confronta riga per riga: costo reale, "
+                   "voci mancanti, rischi e verdetto. Gratis, controllato da una persona prima di arrivarti.")
 
     valori = {
         "TITOLO": esc(titolo),
         "DESCRIZIONE": esc(descrizione),
         "URL_CANONICA": esc(url_base + "/"),
-        "OG_TITOLO": esc("Un preventivo, tre livelli. Il cliente sceglie il valore."),
+        "OG_TITOLO": esc("Confronta i preventivi. Scegli quello giusto."),
         "OG_DESCRIZIONE": esc(descrizione),
         "OG_IMMAGINE": esc(url_base + "/images/og.png"),
         "CSS_HREF": esc("assets/%s/landing.css" % versione),
         "PIANO_SCRIPT": piano,
         "JSON_LD": costruisci_jsonld(url_base),
-        "ESEMPI": costruisci_carte(proposte),
+        "ESEMPI": costruisci_carte(proposte, out_root),
         "FAQ": costruisci_faq(),
         "URL_AZIENDE": URL_AZIENDE,
+        "URL_CONTATTO": URL_CONTATTO,
     }
     with open(os.path.join(out_root, "index.html"), "w", encoding="utf-8") as f:
         f.write(tmpl.substitute(valori))
@@ -277,6 +291,10 @@ def main():
 
     # --- sitemap.xml (solo le pagine indicizzabili)
     voci = ['  <url>\n    <loc>%s/</loc>\n    <priority>1.0</priority>\n  </url>' % url_base]
+    # confronto demo pubblico
+    confronto_demo = os.path.join(out_root, "confronto-demo-bagno", "index.html")
+    if os.path.exists(confronto_demo):
+        voci.append('  <url>\n    <loc>%s/confronto-demo-bagno/</loc>\n    <priority>0.9</priority>\n  </url>' % url_base)
     for p in indicizzabili:
         voci.append('  <url>\n    <loc>%s/%s/</loc>\n    <priority>0.7</priority>\n  </url>'
                     % (url_base, p["slug"]))

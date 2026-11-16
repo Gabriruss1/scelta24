@@ -1,0 +1,42 @@
+{
+  "tipo": "bagno",
+  "nome": "Ristrutturazione bagno",
+  "descrizione": "Griglia di completezza per confrontare preventivi di ristrutturazione di un bagno. Derivata dalla struttura Base/Consigliata/Completa usata nei nostri preventivi.",
+  "voci_obbligatorie": [
+    { "voce": "Allestimento cantiere, protezione pavimenti e arredi, trasporto materiali al piano", "perche": "Senza questa voce il costo del cantiere viene scaricato altrove o aggiunto dopo.", "peso": 2 },
+    { "voce": "Demolizione rivestimenti, sanitari e massetto, con smaltimento autorizzato", "perche": "Se manca, resta a carico del committente.", "peso": 3 },
+    { "voce": "Rifacimento massetto alleggerito e impermeabilizzazione in 2 strati", "perche": "E' la voce che piu' spesso manca nei preventivi economici e costa di piu' rifarla dopo.", "peso": 3 },
+    { "voce": "Rifacimento impianto idrico in multistrato e scarichi fino a colonna, collaudo in pressione", "perche": "Un impianto non collaudato e' una spesa futura certa.", "peso": 3 },
+    { "voce": "Rifacimento impianto elettrico bagno con punti IP44 e aspiratore", "perche": "Gli impianti in bagno hanno regole precise: la voce deve esserci.", "peso": 3 },
+    { "voce": "Fornitura e posa pavimenti e rivestimenti in gres", "perche": "Specificare formato e gamma evita il 'materiale a scelta' a prezzo fisso.", "peso": 2 },
+    { "voce": "Sanitari sospesi con cassetta da incasso", "perche": "Se manca, e' una rinuncia a un prezzo pieno.", "peso": 2 },
+    { "voce": "Doccia walk-in con piatto filo-pavimento e colonna termostatica", "perche": "La colonna termostatica distingue un bagno sicuro da uno economico.", "peso": 2 }
+  ],
+  "voci_opzionali": [
+    { "voce": "Rubinetteria e accessori", "perche": "Spesso esclusa: va chiesto chi la fornisce." },
+    { "voce": "Mobile bagno con specchio illuminato", "perche": "Se un preventivo la include e l'altro no, il confronto non e' alla pari." },
+    { "voce": "Scaldasalviette", "perche": "Se presente in uno e assente nell'altro, va segnalato." },
+    { "voce": "Isolamento acustico e ventilazione meccanica", "perche": "Comfort, non obbligatori: da valutare in base al contesto." },
+    { "voce": "Pratica CILA e asseverazione per detrazione 50%", "perche": "Se non e' gestita, il committente deve farla e pagarla da parte." }
+  ],
+  "extra_frequenti": [
+    "Opere murarie oltre il ripristino ordinario",
+    "Oneri di discarica oltre il primo viaggio",
+    "Allacciamenti esterni al bagno",
+    "Ripristino intonaco dopo la posa",
+    "Tende, arredi e accessori non elencati"
+  ],
+  "trappole": [
+    { "clausola": "Impermeabilizzazione non menzionata", "perche": "E' la voce piu' costosa da recuperare dopo: il bagno perde 2-3 giorni e migliaia di euro.", "livello": "rosso" },
+    { "clausola": "Prezzo al netto di IVA senza aliquota dichiarata", "perche": "L'IVA agevolata al 10% non si applica a tutti gli interventi: vai a vedere la fattura.", "livello": "rosso" },
+    { "clausola": "Tempi 'indicativi' o 'salvo disponibilita' materiali'", "perche": "Un tempo non vincolante non e' un tempo: non protegge da ritardi.", "livello": "giallo" },
+    { "clausola": "Caparra superiore al 30% o non vincolante", "perche": "Una caparra alta su un'impresa non verificata e' il rischio piu' grande per il committente.", "livello": "rosso" },
+    { "clausola": "Garanzia inferiore a 2 anni", "perche": "La garanzia legale sulle opere e' di 2 anni: meno significa rinunciare a un diritto.", "livello": "rosso" },
+    { "clausola": "Detrazione fiscale 'a tuo carico'", "perche": "La pratica ha un costo: va messa nel confronto, non data per scontata.", "livello": "giallo" },
+    { "clausola": "Voci 'a misura' o 'da definire in corso d'opera'", "perche": "Sono la porta d'ingresso degli extra: chiedi un importo massimo stimato.", "livello": "rosso" }
+  ],
+  "detrazioni": "Ristrutturazione edilizia: detrazione 50% documentata da CILA e asseverazione dove prevista. Verificare sempre la normativa vigente e l'anno di riferimento.",
+  "tempi_tipici": "12-16 giorni lavorativi di cantiere, 4-5 settimane di consegna materiali.",
+  "caparre_tipiche": "30% alla conferma, 40% a impianti posati, 30% a collaudo.",
+  "fonte": "Struttura Base/Consigliata/Completa dei nostri preventivi (demo-edilcasa) e voci standard di mercato."
+}

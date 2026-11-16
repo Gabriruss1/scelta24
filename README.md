@@ -1,102 +1,49 @@
-# Preventivi24 — Proposta (progetto gemello)
+# Scelta24 — confronta i preventivi e scegli quello giusto
 
-Il lato cliente di [Preventivi24](https://gabriruss1.github.io/preventivi24/).
+Lato "cliente finale" di [Preventivi24](https://gabriruss1.github.io/preventivi24/).
+Live: https://gabriruss1.github.io/scelta24/
 
-Il sito principale vende alle aziende la riscrittura dei preventivi su tre
-opzioni. Questo progetto costruisce la **proposta che quella azienda manda al
-suo cliente finale**: una pagina che si apre dal telefono, con le tre opzioni
-affiancate e la scelta in un tocco.
+Scelta24 confronta preventivi e contratti riga per riga: **costo reale, voci mancanti, rischi e verdetto**, con le domande da fare alle aziende. Gratis, controllato da una persona prima dell'invio. I documenti non vengono pubblicati ne' usati per addestrare modelli.
 
-```
-prova 50 - clienti/
-├── index.html            la landing pubblica (il metodo)
-├── demo-edilcasa/        una proposta dimostrativa, generata
-├── demo-serramenti/      una proposta dimostrativa, generata
-├── assets/<versione>/    css e js condivisi (la versione e' l'hash del kit)
-├── generatore/           i programmi
-├── kit/                  il design system e i modelli di pagina
-├── proposte/             i dati: una cartella per proposta
-├── docs/                 privacy, procedura per il cliente, fase C
-├── AGENTS.md             le regole del progetto
-└── opencode.json         la configurazione di OpenCode per questo progetto
-```
+Include anche il generatore di **proposte a 3 opzioni** (Base/Consigliata/Completa) usato come strumento e come fonte della griglia di completezza.
 
-## I quattro comandi
+## Struttura
+
+- `conoscenza/` — griglie di completezza per tipo di lavoro (il vantaggio: cosa deve esserci)
+- `analisi/confronto-demo-bagno/` — dati del confronto dimostrativo pubblico
+- `confronto-demo-bagno/`, `demo-edilcasa/`, `demo-serramenti/` — pagine generate
+- `generatore/analizza.py` — genera confronto (HTML + verdetto.pdf + og.png + domande.md)
+- `generatore/genera_proposta.py` — genera proposta a 3 opzioni (HTML + PDF + og.png)
+- `generatore/build_site.py`, `publish_check.py`, `serve.py`, `prova.py`
+- `kit/` — design system e template
+- `docs/` — privacy, procedura analisi, passo-passo B2B
+
+## Comandi
 
 ```bash
-# 1. una proposta nuova (pagina + anteprima + PDF)
-python generatore/genera_proposta.py proposte\mio-cliente
+# confronto dimostrativo
+python generatore/analizza.py analisi/confronto-demo-bagno
 
-# 2. la parte pubblica (landing, robots, sitemap)
+# proposta a 3 opzioni (demo)
+python generatore/genera_proposta.py proposte/demo-edilcasa --pubblico --robots "index, follow"
+
+# sito pubblico (landing, robots, sitemap) + controlli
 python generatore/build_site.py
-
-# 3. i controlli: devono passare prima di pubblicare
 python generatore/publish_check.py
 
-# 4. pubblicare
-git add -A && git commit -m "..." && git push origin main
+# prova locale da telefono (stampa IP di rete)
+python generatore/serve.py
 ```
 
-Per una proposta **reale** (con dati veri) la pagina non va nel repo pubblico:
+### Flusso operativo (assistito, zero costi API)
+1. Il committente invia i PDF dal form contatti (`?servizio=confronto`).
+2. Si compila `analisi/<slug>/analisi.json` usando `conoscenza/<tipo>.json` (vedi `docs/come-analizzare.md`).
+3. `python generatore/analizza.py analisi/<slug> --out out` (dati reali fuori dal repo).
+4. **Controllo umano** e invio. I documenti vengono eliminati dopo la consegna.
 
-```bash
-python generatore/genera_proposta.py proposte\mio-cliente --out out --url-base https://<progetto>.pages.dev
-npx wrangler pages deploy out --project-name <progetto>
-```
-
-## Come si scrive una proposta
-
-Tutto parte da `proposte/<slug>/proposta.json`. Il generatore fa il resto e,
-se il file non rispetta le regole, si rifiuta di generare.
-
-```jsonc
-{
-  "slug": "giser-114",
-  "riferimento": "2026-114",
-  "valida_fino": "2026-12-16",
-  "intervento": "Sostituzione serramenti: 7 finestre e 1 portafinestra",
-  "sintesi": "…",
-  "in_sintesi": "…",
-  "cliente_finale": { "nome": "…", "indirizzo": "…", "mostra_cliente": false },
-  "azienda": {
-    "nome": "Serramenti Giser", "sede": "Rho (MI)",
-    "referente": "…", "telefono": "…", "email": "…", "whatsapp": "39…",
-    "logo": "images/giser.svg",
-    "colori": { "primario": "#12395C", "accento": "#C8952F" }
-  },
-  "opzioni": [
-    { "id": "base", "nome": "Base", "prezzo": 12400, "tempi": "…", "voci": ["…"], "perche": "…" },
-    { "id": "consigliata", "nome": "Comfort", "prezzo": 14900, "tempi": "…",
-      "voci": ["…"], "perche": "…", "consigliata": true },
-    { "id": "completa", "nome": "Completa", "prezzo": 18700, "tempi": "…", "voci": ["…"], "perche": "…" }
-  ],
-  "confronto": [ { "criterio": "…", "base": "…", "consigliata": "…", "completa": "…" } ],
-  "compreso": ["…"], "escluso": ["…"], "pagamenti": ["…"], "garanzie": ["…"]
-}
-```
-
-**Regole che il generatore fa rispettare:** tre opzioni, una sola consigliata, la
-consigliata non e' la piu' cara, ogni prezzo ha i tempi, ogni opzione ha le voci
-e la riga "perche'", nessuna parola di marketing vuoto, il confronto ha un
-valore per ogni opzione.
-
-## OpenCode in questo progetto
-
-- `/proposta <slug>` — genera e verifica
-- `/pubblica` — ricostruisce il sito e passa i controlli
-- `/revisiona <slug>` — revisiona il JSON contro le regole (non modifica nulla)
-- skill `proposta` — le regole del metodo, per chi prepara una proposta
-- `AGENTS.md` — le regole del progetto
-
-## Documenti
-
-- [PROGETTO-GEMELLO.md](PROGETTO-GEMELLO.md) — cosa fa questo progetto e cosa manca
-- [docs/privacy-proposta.md](docs/privacy-proposta.md) — ruoli, dati, cosa non si pubblica
-- [docs/passo-passo-per-il-cliente-b2b.md](docs/passo-passo-per-il-cliente-b2b.md) — la consegna al cliente
-- [docs/fase-c-portale-b2b.md](docs/fase-c-portale-b2b.md) — il portale, quando e se
+Le analisi/proposte reali **non** vanno nel repo pubblico (`publish_check.py` blocca). Deploy link privati: Cloudflare Pages dopo `npx wrangler login` (Fase B).
 
 ## Requisiti
-
-- Python 3 (solo libreria standard)
-- Chrome installato (per il PDF e le anteprime)
-- `segno` (facoltativo, per il QR): `pip install segno`
+- Python 3 (libreria standard)
+- Chrome/Edge per PDF e anteprime OG
+- `segno` opzionale per QR nelle proposte: `pip install segno`
