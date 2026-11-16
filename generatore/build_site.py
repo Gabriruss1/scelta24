@@ -176,6 +176,33 @@ h2{font-size:30px;font-weight:400;opacity:.8;margin-top:26px;max-width:820px;lin
     return None
 
 
+def costruisci_jsonld(url_base):
+    """Dati strutturati: le domande frequenti e il sito.
+    E' cio' che permette a Google di mostrare le risposte sotto il risultato."""
+    faq = [{
+        "@type": "Question",
+        "name": domanda,
+        "acceptedAnswer": {"@type": "Answer", "text": risposta},
+    } for domanda, risposta in FAQ]
+    dati = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "name": "Preventivi24",
+                "url": url_base + "/",
+                "inLanguage": "it-IT",
+                "description": "Il metodo del preventivo a 3 opzioni: Base, Consigliata, Completa.",
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": faq,
+            },
+        ],
+    }
+    return json.dumps(dati, ensure_ascii=False, indent=2)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Costruisce la parte pubblica del sito.")
     parser.add_argument("--out", default=ROOT, help="cartella del sito")
@@ -226,6 +253,7 @@ def main():
         "OG_IMMAGINE": esc(url_base + "/images/og.png"),
         "CSS_HREF": esc("assets/%s/landing.css" % versione),
         "PIANO_SCRIPT": piano,
+        "JSON_LD": costruisci_jsonld(url_base),
         "ESEMPI": costruisci_carte(proposte),
         "FAQ": costruisci_faq(),
         "URL_AZIENDE": URL_AZIENDE,
