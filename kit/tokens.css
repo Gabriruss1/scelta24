@@ -1,0 +1,59 @@
+/* ==========================================================================
+   tokens.css — Preventivi24 / Proposta
+   Palette ereditata dal sito principale (preventivi24).
+   Ogni proposta puo' sovrascrivere --brand e --brand-ink con i colori del
+   cliente B2B: il generatore li inietta come <style> inline prima di questo file.
+   ========================================================================== */
+
+:root {
+  /* --- colore del cliente (sovrascrivibile) --- */
+  --brand: #0F1729;
+  --brand-ink: #F5F0E8;
+
+  /* --- palette di sistema --- */
+  --navy: #0F1729;
+  --navy-light: #1A2332;
+  --navy-mid: #243044;
+  --amber: #E8A838;
+  --amber-dim: #B8842A;
+  --cream: #F5F0E8;
+  --paper: #FBFAF6;
+  --white: #FAFAF8;
+  --ink: #14161C;
+  --grey: #6B7684;
+  --grey-light: #94A3B8;
+  --line: #E3E0D8;
+  --green: #1C7A3E;
+  --red: #B3261E;
+
+  /* --- tipografia --- */
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", monospace;
+
+  /* --- scala fluida --- */
+  --t-hero: clamp(1.9rem, 1.2rem + 3.2vw, 3.1rem);
+  --t-h2: clamp(1.35rem, 1.1rem + 1.1vw, 1.85rem);
+  --t-h3: clamp(1.05rem, 0.98rem + 0.35vw, 1.22rem);
+  --t-body: clamp(1rem, 0.97rem + 0.15vw, 1.06rem);
+  --t-small: 0.875rem;
+  --t-tiny: 0.78rem;
+
+  /* --- spazi --- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 14px;
+  --s-4: 22px;
+  --s-5: 34px;
+  --s-6: 52px;
+
+  /* --- raggi e ombre --- */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(20, 22, 28, .06);
+  --shadow-md: 0 6px 18px rgba(20, 22, 28, .08);
+  --shadow-lg: 0 18px 44px rgba(20, 22, 28, .14);
+
+  --maxw: 1080px;
+}

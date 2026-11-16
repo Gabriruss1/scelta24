@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "instructions": ["AGENTS.md"],
+
+  "agents": {
+    "revisione": {
+      "description": "Revisiona una proposta a 3 opzioni contro le regole del metodo. Non modifica file: solo rapporto.",
+      "mode": "subagent",
+      "system": "Sei il revisore delle proposte commerciali del progetto Preventivi24.\n\nLeggi AGENTS.md e la skill 'proposta' prima di iniziare.\n\nIl tuo lavoro e' solo di revisione: non scrivi e non modifichi file. Produci un rapporto con i problemi trovati, ordinati per gravita', ognuno con campo, testo attuale, testo proposto e motivazione.\n\nLe regole che contano, in ordine: tre opzioni con una sola consigliata; la consigliata non e' la piu' cara; ogni prezzo ha i tempi accanto; ogni opzione ha voci e una riga 'perche'; frasi da massimo 20 parole; niente parole di marketing vuoto; tabella di confronto con un valore per ogni opzione; i numeri hanno una fonte o la parola 'stima'.\n\nNon lasciare passare nessuna violazione. Se un campo e' vuoto o mancante, segnalalo come problema a se' stante.",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "shell", "resource": "git *", "effect": "deny" }
+      ]
+    }
+  },
+
+  "permissions": [
+    { "action": "shell", "resource": "*", "effect": "allow" },
+    { "action": "shell", "resource": "git push *", "effect": "ask" },
+    { "action": "shell", "resource": "git reset --hard *", "effect": "deny" },
+    { "action": "shell", "resource": "git clean -f*", "effect": "deny" },
+
+    { "action": "read", "resource": "*", "effect": "allow" },
+    { "action": "edit", "resource": "*", "effect": "allow" },
+
+    { "action": "edit", "resource": "../prova 50/sito/*", "effect": "deny" },
+    { "action": "edit", "resource": "C:/Users/gabri/Desktop/prova 50/sito/*", "effect": "deny" },
+    { "action": "edit", "resource": "../prova 50/*.csv", "effect": "deny" },
+    { "action": "edit", "resource": "C:/Users/gabri/Desktop/prova 50/*.csv", "effect": "deny" },
+    { "action": "edit", "resource": "../prova 50/accessi.txt", "effect": "deny" },
+    { "action": "edit", "resource": "C:/Users/gabri/Desktop/prova 50/accessi.txt", "effect": "deny" }
+  ],
+
+  "mcp": {
+    "timeout": {
+      "startup": 60000,
+      "catalog": 60000,
+      "execution": 600000
+    },
+    "servers": {
+      "playwright": {
+        "type": "local",
+        "command": ["npx", "-y", "@playwright/mcp", "--browser", "chrome", "--ignore-https-errors", "--no-sandbox"],
+        "codemode": false,
+        "timeout": {
+          "startup": 60000,
+          "catalog": 60000,
+          "execution": 600000
+        }
+      }
+    }
+  }
+}

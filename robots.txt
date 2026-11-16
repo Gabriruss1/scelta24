@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gabriruss1.github.io/preventivi24-clienti/sitemap.xml

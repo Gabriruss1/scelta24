@@ -1,0 +1,120 @@
+{
+  "slug": "demo-serramenti",
+  "demo": true,
+  "etichetta": "Proposta su 3 opzioni",
+  "riferimento": "2026-118",
+  "data": "2026-11-16",
+  "valida_fino": "2026-12-16",
+  "sopralluogo": "2026-11-06",
+  "luogo": "Appartamento in Rho (MI)",
+  "intervento": "Sostituzione serramenti: 7 finestre e 1 portafinestra",
+  "meta_descrizione": "Proposta per la sostituzione dei serramenti: tre opzioni di intervento, dai singoli infissi al pacchetto completo con pratiche.",
+  "sintesi": "Sostituiamo gli infissi in alluminio con serramenti in PVC a 6 camere: stessi passaggi, nessun ponteggio, 5-6 settimane dalla conferma.",
+  "in_sintesi": "Sostituzione completa di 8 aperture, dal smontaggio dei vecchi infissi alla posa e al collaudo apertura per apertura. Il livello Consigliata aggiunge il vetro selettivo e le maniglie con chiave: la differenza di bollette si vede in tre anni, non in tre mesi.",
+  "cliente_finale": {
+    "nome": "Sig. e Sig.ra Bianchi",
+    "indirizzo": "Via Manzoni 14, Rho (MI)",
+    "mostra_cliente": false
+  },
+  "azienda": {
+    "nome": "Serramenti Aurora",
+    "sede": "Rho (MI)",
+    "referente": "Marco Bertolini",
+    "telefono": "02 0000 0000",
+    "email": "info@serramentiaurora.it",
+    "whatsapp": "",
+    "logo": "images/aurora.svg",
+    "colori": {
+      "primario": "#12395C",
+      "accento": "#C8952F",
+      "tinta": "#F5F0E8"
+    }
+  },
+  "opzioni": [
+    {
+      "id": "base",
+      "nome": "Base",
+      "prezzo": 12400,
+      "iva": "10%",
+      "tempi": "Consegna 5 settimane · posa 3 giorni",
+      "consigliata": false,
+      "voci": [
+        "7 finestre in PVC a 6 camere con triplo vetro",
+        "1 portafinestra con soglia ribassata",
+        "Ferri e maniglie standard bianche",
+        "Rimozione e smaltimento dei vecchi infissi",
+        "Posa con schiuma e nastro su tre lati"
+      ],
+      "perche": "Sostituisce quello che non tiene piu' il caldo e il rumore, al prezzo piu' basso del listino."
+    },
+    {
+      "id": "consigliata",
+      "nome": "Comfort",
+      "prezzo": 14900,
+      "iva": "10%",
+      "tempi": "Consegna 5 settimane · posa 4 giorni",
+      "consigliata": true,
+      "voci": [
+        "Tutto quello della Base",
+        "Vetro selettivo basso-emissivo per il risparmio invernale",
+        "Maniglie in alluminio con chiusura a chiave",
+        "Cassonetto coibentato e avvolgibili nuovi",
+        "Zanzariere su 4 aperture",
+        "Smontaggio e rimontaggio degli arredi interni"
+      ],
+      "perche": "Costa 2.500 € piu' della Base e abbassa la bolletta di circa 300 € l'anno: si ripaga in 8 anni."
+    },
+    {
+      "id": "completa",
+      "nome": "Completa",
+      "prezzo": 18700,
+      "iva": "10%",
+      "tempi": "Consegna 6 settimane · posa 5 giorni",
+      "consigliata": false,
+      "voci": [
+        "Tutto quello della Comfort",
+        "Scuretti e persiane in alluminio su misura",
+        "Controtelai nuovi e soglie in marmo",
+        "Pratica e asseverazione per la detrazione fiscale",
+        "Ritiro e ripristino dell'intonaco interno"
+      ],
+      "perche": "Include la parte esterna e la pratica fiscale: a fine lavoro non resta nulla da gestire."
+    }
+  ],
+  "confronto": [
+    { "criterio": "Isolamento termico e acustico", "base": "Buono", "consigliata": "Ottimo", "completa": "Ottimo" },
+    { "criterio": "Bolletta del riscaldamento (stima)", "base": "-10%", "consigliata": "-22%", "completa": "-25%" },
+    { "criterio": "Persiane e parte esterna", "base": "No", "consigliata": "No", "completa": "Incluse" },
+    { "criterio": "Zanzariere", "base": "No", "consigliata": "4 aperture", "completa": "7 aperture" },
+    { "criterio": "Pratica detrazione fiscale", "base": "A tuo carico", "consigliata": "A tuo carico", "completa": "Gestita da noi" },
+    { "criterio": "Pulizia finale del cantiere", "base": "Si", "consigliata": "Si", "completa": "Si" },
+    { "criterio": "Garanzia posa", "base": "2 anni", "consigliata": "2 anni", "completa": "5 anni" }
+  ],
+  "compreso": [
+    "Sopralluogo e rilievo misure",
+    "Trasporto, scarico e montaggio",
+    "Smaltimento degli infissi esistenti",
+    "Pulizia del cantiere a fine lavoro",
+    "Collaudo con te, apertura per apertura"
+  ],
+  "escluso": [
+    "Opere murarie oltre il ripristino ordinario",
+    "Ponteggio, se richiesto dal condominio",
+    "Tende, arredi e climatizzatori",
+    "Modifiche al progetto dopo la firma"
+  ],
+  "pagamenti": [
+    "30% alla conferma dell'ordine",
+    "60% prima della posa",
+    "10% a collaudo completato",
+    "Consegna: 5-6 settimane dalla conferma"
+  ],
+  "garanzie": [
+    "Azienda dal 1987, 3 generazioni",
+    "Produzione interna, non rivendita",
+    "Ogni serramento collaudato in officina",
+    "Un solo referente, dal rilievo al collaudo"
+  ],
+  "nota": "Prezzi al netto di IVA. Le stime di risparmio energetico sono indicative, calcolate su 110 mq in zona climatica E. Il sopralluogo non ha costo e non comporta impegno.",
+  "privacy_nota": "Documento riservato a chi ha ricevuto il link."
+}

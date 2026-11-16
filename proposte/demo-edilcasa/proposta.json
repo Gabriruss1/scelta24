@@ -1,0 +1,165 @@
+{
+  "slug": "demo-edilcasa",
+  "demo": true,
+  "etichetta": "Proposta su 3 opzioni",
+  "riferimento": "2026-114",
+  "data": "2026-11-16",
+  "valida_fino": "2026-12-16",
+  "sopralluogo": "2026-11-10",
+  "luogo": "Appartamento in centro, Palermo",
+  "intervento": "Ristrutturazione completa del bagno principale",
+  "meta_descrizione": "Proposta per la ristrutturazione completa di un bagno: tre opzioni di intervento, tempi e prezzi.",
+  "sintesi": "Rifacciamo il bagno principale di 6,5 mq: impianti, massetto, superfici e sanitari, con cantiere chiuso in 12-16 giorni lavorativi. Sotto trovi tre livelli di intervento.",
+  "in_sintesi": "Bagno di 6,5 mq rifatto per intero: impianti idrico ed elettrico nuovi, massetto e impermeabilizzazione, superfici in gres porcellanato, sanitari sospesi e doccia walk-in. Il livello Consigliata costa esattamente il prezzo del vecchio preventivo a prezzo unico: cambia il modo in cui lo confronti, non quanto spendi.",
+  "cliente_finale": {
+    "nome": "Fam. Di Stefano",
+    "indirizzo": "Via Sciuti 45, Palermo",
+    "mostra_cliente": false
+  },
+  "azienda": {
+    "nome": "EdilCasa di Gabriele Romano",
+    "sede": "Palermo",
+    "referente": "Gabriele Romano",
+    "telefono": "091 555 0134",
+    "email": "info@edilcasa-palermo.it",
+    "partita_iva": "P.IVA 06651230821",
+    "whatsapp": "",
+    "logo": "images/edilcasa.svg",
+    "colori": {
+      "primario": "#1B3A5C",
+      "accento": "#C8952F",
+      "tinta": "#F5F0E8"
+    }
+  },
+  "opzioni": [
+    {
+      "id": "base",
+      "nome": "Base",
+      "prezzo": 9250,
+      "iva": "10% agevolata",
+      "tempi": "Consegna 4 settimane · cantiere 12 giorni lavorativi",
+      "consigliata": false,
+      "voci": [
+        "Allestimento cantiere, protezione pavimenti e arredi, trasporto materiali al piano",
+        "Demolizione rivestimenti, sanitari e massetto, con smaltimento a discarica autorizzata",
+        "Rifacimento massetto alleggerito con impermeabilizzazione in 2 strati",
+        "Rifacimento impianto idrico in multistrato e scarichi fino a colonna, collaudo in pressione",
+        "Rifacimento impianto elettrico bagno: 8 punti luce e prese IP44, aspiratore temporizzato",
+        "Fornitura gres porcellanato medio gamma 60x60 e 30x60, pavimento e rivestimenti",
+        "Posa pavimenti e rivestimenti a colla con fughe epossidiche e profili angolari",
+        "Sanitari sospesi con cassetta da incasso e placca a doppio tasto",
+        "Doccia walk-in con piatto filo-pavimento 120 cm, box temperato e colonna termostatica"
+      ],
+      "perche": "Risolve il problema per cui hai chiesto il preventivo: impianti e superfici nuovi, in un tempo definito."
+    },
+    {
+      "id": "consigliata",
+      "nome": "Comfort",
+      "prezzo": 12460,
+      "iva": "10% agevolata",
+      "tempi": "Consegna 4 settimane · cantiere 14 giorni lavorativi",
+      "consigliata": true,
+      "voci": [
+        "Tutto quello della Base",
+        "Rubinetteria lavabo, bidet e doccia con accessori e scalda-acqua di cortesia",
+        "Mobile bagno 90 cm con top integrato, due cassetti e specchio con illuminazione LED",
+        "Scaldasalviatte elettrico 800 W con termostato digitale",
+        "Isolamento acustico della parete vasca e controsoffitto in cartongesso",
+        "Ventilazione meccanica con Bocchetta di estrazione e plafoniera LED a sensore"
+      ],
+      "perche": "Costa esattamente il prezzo del vecchio preventivo a prezzo unico, ma aggiunge comfort termico e acustico: in un bagno ci si sta ogni giorno."
+    },
+    {
+      "id": "completa",
+      "nome": "Completa",
+      "prezzo": 14310,
+      "iva": "10% agevolata",
+      "tempi": "Consegna 5 settimane · cantiere 16 giorni lavorativi",
+      "consigliata": false,
+      "voci": [
+        "Tutto quello della Comfort",
+        "Pratica CILA e asseverazione per la detrazione fiscale del 50%",
+        "Superfici in gres porcellanato pregiato a formato grande, pavimento e rivestimenti",
+        "Kit arredo completo con specchio retroilluminato e colonna doccia termostatica in ottone",
+        "Assistenza muraria dedicata e ripristino completo dell'intonaco"
+      ],
+      "perche": "Include la pratica fiscale e le finiture pregiate: a fine cantiere non resta nulla da gestire."
+    }
+  ],
+  "confronto": [
+    {
+      "criterio": "Impianti idrico ed elettrico",
+      "base": "Si",
+      "consigliata": "Si",
+      "completa": "Si"
+    },
+    {
+      "criterio": "Superfici in gres porcellanato",
+      "base": "Medio",
+      "consigliata": "Medio",
+      "completa": "Pregiato"
+    },
+    {
+      "criterio": "Ventilazione",
+      "base": "A finestra",
+      "consigliata": "Meccanica",
+      "completa": "Meccanica"
+    },
+    {
+      "criterio": "Isolamento acustico parete vasca",
+      "base": "No",
+      "consigliata": "Si",
+      "completa": "Si"
+    },
+    {
+      "criterio": "Pratica e asseverazione detrazione 50%",
+      "base": "A tuo carico",
+      "consigliata": "A tuo carico",
+      "completa": "Gestita da noi"
+    },
+    {
+      "criterio": "Garanzia sulle opere",
+      "base": "2 anni",
+      "consigliata": "2 anni",
+      "completa": "5 anni"
+    },
+    {
+      "criterio": "Garanzia impermeabilizzazione",
+      "base": "5 anni",
+      "consigliata": "10 anni",
+      "completa": "10 anni"
+    },
+    {
+      "criterio": "Assistenza post-cantiere",
+      "base": "No",
+      "consigliata": "6 mesi",
+      "completa": "6 mesi + 1 anno"
+    }
+  ],
+  "compreso": [
+    "Sopralluogo e rilievo misure",
+    "Trasporto, scarico e montaggio al piano",
+    "Smaltimento dei materiali di risulta con formulario",
+    "Pulizia di fine cantiere",
+    "Collaudo finale con prova di tenuta idraulica"
+  ],
+  "escluso": [
+    "Opere murarie oltre il ripristino ordinario",
+    "Arredi, tende e accessori non elencati",
+    "Allacciamenti esterni al bagno",
+    "Oneri di discarica oltre il primo viaggio"
+  ],
+  "pagamenti": [
+    "30% alla conferma dell'ordine",
+    "40% a impianti posati",
+    "30% a fine lavori e collaudo",
+    "Bonifico parlante per detrazione fiscale del 50%"
+  ],
+  "garanzie": [
+    "2 anni su opere e impianti (art. 1667 c.c.)",
+    "10 anni su impermeabilizzazione",
+    "Garanzie di fabbrica sui materiali installati"
+  ],
+  "nota": "Prezzi al netto di IVA. Documento dimostrativo con prezzi medi di mercato per la provincia di Palermo.",
+  "privacy_nota": "Documento riservato a chi ha ricevuto il link."
+}

@@ -1,0 +1,26 @@
+# --- artefatti generati (si ricreano con i comandi) ---
+out/
+*.pdf.tmp
+
+# --- proposte reali: NON vanno mai nel repo pubblico ---
+# le proposte con dati veri si generano fuori dal repo (--out out) e si
+# pubblicano su Cloudflare Pages. Se per errore una cartella reale finisce
+# qui, il publish_check lo segnala ma il file resterebbe pubblico:
+# meglio escludere tutto quello che non e' demo.
+proposte/*/images/
+proposte/*/*.pdf
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# --- sistema ---
+.DS_Store
+Thumbs.db
+*.log
+
+# --- tooling ---
+.playwright-mcp/
+_check/
