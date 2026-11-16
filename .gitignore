@@ -24,3 +24,6 @@ Thumbs.db
 # --- tooling ---
 .playwright-mcp/
 _check/
+
+# --- prova locale (generata da prova.py) ---
+prova-output/
