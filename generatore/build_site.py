@@ -34,7 +34,7 @@ KIT_LANDING_TMPL = os.path.join(KIT, "landing.html.tmpl")
 KIT_TOKENS = os.path.join(KIT, "tokens.css")
 
 URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
-URL_CONTATTO = "https://gabriruss1.github.io/preventivi24/contatti.html?servizio=confronto"
+URL_CONTATTO = "/contatti.html?servizio=confronto"
 
 FAQ = [
     ("Come faccio a confrontare due o tre preventivi?",
@@ -279,6 +279,27 @@ def main():
     }
     with open(os.path.join(out_root, "index.html"), "w", encoding="utf-8") as f:
         f.write(tmpl.substitute(valori))
+
+    # --- pagina contatti (dedicata a Scelta24, non rimanda a Preventivi24)
+    with open(os.path.join(KIT, "contatti.html.tmpl"), "r", encoding="utf-8") as f:
+        tmpl_contatti = Template(f.read())
+
+    valori_contatti = {
+        "TITOLO": esc("Contatti — Scelta24"),
+        "DESCRIZIONE": esc("Invia i tuoi preventivi a Scelta24 per il confronto assistito. Gratis, controllato da una persona prima dell'invio."),
+        "URL_CANONICA": esc(url_base + "/contatti.html"),
+        "CSS_VER": versione,
+        "KICKER": esc("Invia i tuoi preventivi"),
+        "TITOLO_H1": esc("Invia i tuoi preventivi"),
+        "LEAD": esc("Mandaci i preventivi o i contratti che vuoi confrontare. Li analizziamo riga per riga e ti inviamo il verdetto, controllato da una persona. Gratis."),
+        "NOTA": esc("Gratis. Nessuna registrazione. I documenti non addestrano modelli e vengono eliminati dopo la consegna."),
+        "TIPO_LAVORO_VIS": "none",
+        "MESSAGGIO_PLACEHOLDER": esc("Descrivi brevemente la tua richiesta e indica quanti preventivi vuoi confrontare. Allega i PDF in risposta alla mail di conferma."),
+        "FORM_NOTE": esc("Gratis. I documenti non vengono pubblicati ne' usati per addestrare modelli e vengono eliminati dopo la consegna."),
+        "URL_AZIENDE": URL_AZIENDE,
+    }
+    with open(os.path.join(out_root, "contatti.html"), "w", encoding="utf-8") as f:
+        f.write(tmpl_contatti.substitute(valori_contatti))
 
     # --- robots.txt
     robots = (

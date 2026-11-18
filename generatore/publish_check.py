@@ -104,7 +104,13 @@ def controlla_proposte():
         for href in re.findall(r'(?:href|src)="([^"]+)"', contenuto):
             if href.startswith(("http://", "https://", "mailto:", "tel:", "data:", "#")):
                 continue
-            destinazione = os.path.normpath(os.path.join(cartella, href.split("#")[0]))
+            # path senza query string e senza fragment
+            percorso_href = href.split("#")[0].split("?")[0]
+            if href.startswith("/"):
+                # link root-relative: si risolve dalla root del progetto
+                destinazione = os.path.normpath(os.path.join(ROOT, percorso_href.lstrip("/")))
+            else:
+                destinazione = os.path.normpath(os.path.join(cartella, percorso_href))
             if not os.path.exists(destinazione):
                 problemi.append("%s: link rotto -> %s" % (slug, href))
     return problemi

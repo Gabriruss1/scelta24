@@ -29,8 +29,8 @@ KIT_TOKENS = os.path.join(KIT, "tokens.css")
 
 URL_BASE_DEFAULT = "https://gabriruss1.github.io/scelta24"
 URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
-URL_CONTATTO = "https://gabriruss1.github.io/preventivi24/contatti.html?servizio=confronto"
-URL_ANALISI_COMPLETA = "https://gabriruss1.github.io/preventivi24/contatti.html?servizio=analisi-completa"
+URL_CONTATTO = "/contatti.html?servizio=confronto"
+URL_ANALISI_COMPLETA = "/contatti.html?servizio=analisi-completa"
 
 # importa utility dal generatore esistente
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
