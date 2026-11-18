@@ -40,7 +40,7 @@
 
 <section class="sezione">
   <div class="wrap">
-    <form action="https://formsubmit.co/russo.enterprise.biz@gmail.com" method="POST" id="contactForm">
+    <form action="https://formsubmit.co/russo.enterprise.biz@gmail.com" method="POST" id="contactForm" enctype="multipart/form-data">
       <input type="hidden" name="_subject" id="subjectField" value="Nuova richiesta dal sito Scelta24">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
@@ -69,6 +69,10 @@
 
       <label for="messaggio">Messaggio *</label>
       <textarea id="messaggio" name="messaggio" required>Descrivi brevemente la tua richiesta e indica quanti preventivi vuoi confrontare. Allega i PDF in risposta alla mail di conferma.</textarea>
+
+      <label for="allegati">Allega preventivi o contratti (PDF)</label>
+      <input type="file" id="allegati" name="allegati" accept=".pdf" multiple placeholder="Allega PDF">
+      <p class="form-note" style="font-size:0.9rem;margin-top:4px;">Puoi allegare più PDF. Se hai più preventivi, mandali tutti insieme.</p>
 
       <button type="submit" class="btn btn--accent">Invia richiesta</button>
       <div class="form-status" id="formStatus"></div>
