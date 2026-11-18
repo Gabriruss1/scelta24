@@ -3,6 +3,14 @@
 Cosa riceve e cosa deve fare un'azienda che compra il servizio "proposta a 3
 opzioni". Una pagina, da mandare in allegato alla prima consegna.
 
+> **Nota (18/11/2026).** Accanto al servizio a pagamento esiste **Scelta24**,
+> il confronto preventivi gratuito per il committente finale: riceve più PDF,
+> vede costo reale, voci mancanti, semafori e un verdetto controllato da una
+> persona, con le domande da fare alle aziende. Le voci Base/Consigliata/
+> Completa delle tue proposte alimentano la griglia di completezza usata dal
+> confronto. Se un tuo cliente finale riceve preventivi da più aziende, puoi
+> segnalargli Scelta24: è gratis e non richiede registrazione.
+
 ---
 
 ## Cosa ti mandiamo
