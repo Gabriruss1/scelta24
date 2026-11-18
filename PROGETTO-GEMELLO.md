@@ -76,6 +76,23 @@ Il cliente B2B vede proposte, scelte, tempi e report. È il Livello C dell'offer
 
 ---
 
+### Monetizzazione — modello freemium (entrambe le fasi sopravvivono con le proprie entrate)
+
+Scelta24 è un servizio autonomo, non un cavallo di Troia di Preventivi24. Ha il suo costo (tempo di analisi, lettura contratti, controllo umano) e la sua fonte di entrata.
+
+| Livello | Cosa include | Prezzo | Chi paga |
+|---|---|---|---|
+| **Gratuito** | Quale preventivo scegliere e perche', costo reale stimato, verdetto in chiaro | 0 € | committente finale (nessun costo) |
+| **Completa** | Tabella riga per riga, voci mancanti, semafori di rischio (caparra, garanzia, tempi, detrazioni), domande scritte da inviare alle aziende | 39 € | committente finale |
+
+Il campo `livello` in `analisi/<slug>/analisi.json` (`gratuito` o `completo`) determina cosa mostra il report. Il primo confronto di un cliente è gratis (prova del metodo); dal secondo in poi, o per contratti complessi, si paga.
+
+**Regola:** il committente finale paga, non l'installatore. Se pagasse l'azienda analizzata, il verdetto perderebbe credibilità (conflitto di interessi).
+
+Preventivi24 (l'altro progetto, su terminale separato) resta il servizio B2B per le aziende: riscrittura dei preventivi su 3 opzioni. I due progetti sono separati e devono sopravvivere entrambi con le proprie entrate.
+
+---
+
 ## Dove finiscono i dati reali
 
 - **Mai nel repo pubblico.** `.gitignore` esclude `analisi/*/` tranne la demo;

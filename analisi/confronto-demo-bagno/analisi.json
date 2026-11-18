@@ -1,6 +1,7 @@
 {
   "slug": "confronto-demo-bagno",
   "demo": true,
+  "livello": "gratuito",
   "titolo": "Confronto preventivi — Ristrutturazione bagno completo",
   "descrizione": "Confronto dimostrativo tra due preventivi per lo stesso bagno: costo reale, voci mancanti, rischi e verdetto.",
   "intervento": "Ristrutturazione completa del bagno principale (6,5 mq)",

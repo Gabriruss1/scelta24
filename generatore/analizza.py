@@ -30,6 +30,7 @@ KIT_TOKENS = os.path.join(KIT, "tokens.css")
 URL_BASE_DEFAULT = "https://gabriruss1.github.io/scelta24"
 URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
 URL_CONTATTO = "https://gabriruss1.github.io/preventivi24/contatti.html?servizio=confronto"
+URL_ANALISI_COMPLETA = "https://gabriruss1.github.io/preventivi24/contatti.html?servizio=analisi-completa"
 
 # importa utility dal generatore esistente
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -69,6 +70,9 @@ def valida(d):
         errori.append("verdetto.scelta '%s' non corrisponde a nessun preventivo %s" % (v.get("scelta"), ids))
     if not v.get("perche"):
         errori.append("verdetto: manca 'perche'")
+    livello = d.get("livello")
+    if livello and livello not in ("gratuito", "completo"):
+        errori.append("livello non valido: '%s' (usa 'gratuito' o 'completo')" % livello)
     return errori
 
 
@@ -211,45 +215,63 @@ def render_corpo(d):
         meta.append("<span><b>Riferimento:</b> %s</span>" % esc(d.get("riferimento")))
 
     demo_badge = '<span class="badge-demo">Confronto dimostrativo</span>' if d.get("demo") else ""
+    livello = d.get("livello") or "gratuito"
+    if livello == "completo":
+        livello_badge = '<span class="badge-livello badge--completa">Analisi completa</span>'
+    else:
+        livello_badge = '<span class="badge-livello badge--gratuito">Analisi gratuita</span>'
 
     parti = []
     parti.append(
         '<section class="hero hero--confronto"><div class="wrap">'
-        '%s'
+        '%s%s'
         '<p class="hero__kicker">Confronto preventivi</p>'
         '<h1>%s</h1>'
         '<p class="hero__lead">Abbiamo messo a confronto %s sullo stesso lavoro. '
         'Qui sotto trovi il costo reale, le voci mancanti, i rischi e il verdetto.</p>'
         '<div class="meta-riga">%s</div>'
         '</div></section>'
-        % (demo_badge, esc(d.get("titolo", "Confronto preventivi")), esc(nomi), "".join(meta))
+        % (demo_badge, livello_badge, esc(d.get("titolo", "Confronto preventivi")), esc(nomi), "".join(meta))
     )
 
     parti.append('<section class="sezione"><div class="wrap">%s</div></section>' % render_verdetto(d))
 
-    parti.append(
-        '<section class="sezione"><div class="wrap">'
-        '<h2 class="h2">I numeri senza trucchi</h2>'
-        '<p class="sottotitolo">Prezzo dichiarato, IVA, costo reale stimato e cosa e\' davvero incluso. Riga per riga.</p>'
-        '%s</div></section>' % render_tabella(d)
-    )
-
-    sem = render_semafori(d)
-    if sem:
-        parti.append(
-            '<section class="sezione sezione--scura"><div class="wrap">'
-            '<h2 class="h2">Rischi e segnali</h2>'
-            '<p class="sottotitolo">Clausole, omissioni e punti da chiarire prima di firmare.</p>'
-            '%s</div></section>' % sem
-        )
-
-    dom = render_domande(d)
-    if dom:
+    if livello == "completo":
         parti.append(
             '<section class="sezione"><div class="wrap">'
-            '<h2 class="h2">Le domande da fare alle aziende</h2>'
-            '<p class="sottotitolo">Copiale e inviale: le risposte scritte contano piu\' delle parole al telefono.</p>'
-            '%s</div></section>' % dom
+            '<h2 class="h2">I numeri senza trucchi</h2>'
+            '<p class="sottotitolo">Prezzo dichiarato, IVA, costo reale stimato e cosa e\' davvero incluso. Riga per riga.</p>'
+            '%s</div></section>' % render_tabella(d)
+        )
+
+        sem = render_semafori(d)
+        if sem:
+            parti.append(
+                '<section class="sezione sezione--scura"><div class="wrap">'
+                '<h2 class="h2">Rischi e segnali</h2>'
+                '<p class="sottotitolo">Clausole, omissioni e punti da chiarire prima di firmare.</p>'
+                '%s</div></section>' % sem
+            )
+
+        dom = render_domande(d)
+        if dom:
+            parti.append(
+                '<section class="sezione"><div class="wrap">'
+                '<h2 class="h2">Le domande da fare alle aziende</h2>'
+                '<p class="sottotitolo">Copiale e inviale: le risposte scritte contano piu\' delle parole al telefono.</p>'
+                '%s</div></section>' % dom
+            )
+    else:
+        parti.append(
+            '<section class="sezione"><div class="wrap">'
+            '<div class="upsell"><h2 class="h2">Vuoi l\'analisi completa?</h2>'
+            '<p>Questo report gratuito ti dice quale preventivo scegliere e perch&eacute;. '
+            'L\'analisi completa (39 &euro;) aggiunge: tabella riga per riga con voci mancanti e costo reale, '
+            'semafori di rischio su caparra, garanzia e tempi, e le domande scritte da inviare alle aziende. '
+            'I documenti non addestrano modelli e vengono eliminati dopo la consegna.</p>'
+            '<div class="hero__azioni" style="justify-content:center; margin-top: var(--s-4);">'
+            '<a class="btn btn--accent" href="%s">Richiedi l\'analisi completa</a>'
+            '</div></div></div></section>' % URL_ANALISI_COMPLETA
         )
 
     if d.get("metodo"):
@@ -259,16 +281,17 @@ def render_corpo(d):
             '<div class="metodo"><p>%s</p></div></div></section>' % esc(d.get("metodo"))
         )
 
-    parti.append(
-        '<section class="sezione no-print"><div class="wrap">'
-        '<div class="cta-blocco"><h2>Hai altri preventivi sul tavolo?</h2>'
-        '<p>Mandaci i PDF: li confrontiamo riga per riga e ti diamo un verdetto chiaro, con le domande da fare. '
-        'Gratis, controllato da una persona prima di arrivarti. I documenti non addestrano modelli e vengono eliminati dopo la consegna.</p>'
-        '<div class="hero__azioni" style="justify-content:center">'
-        '<a class="btn btn--accent" href="%s">Invia i tuoi preventivi</a>'
-        '<a class="btn btn--ghost" href="%s">Sei un\'azienda? Preventivi24</a>'
-        '</div></div></div></section>' % (URL_CONTATTO, URL_AZIENDE)
-    )
+    if livello == "completo":
+        parti.append(
+            '<section class="sezione no-print"><div class="wrap">'
+            '<div class="cta-blocco"><h2>Hai altri preventivi sul tavolo?</h2>'
+            '<p>Mandaci i PDF: li confrontiamo riga per riga e ti diamo un verdetto chiaro, con le domande da fare. '
+            'Gratis, controllato da una persona prima di arrivarti. I documenti non addestrano modelli e vengono eliminati dopo la consegna.</p>'
+            '<div class="hero__azioni" style="justify-content:center">'
+            '<a class="btn btn--accent" href="%s">Invia i tuoi preventivi</a>'
+            '<a class="btn btn--ghost" href="%s">Sei un\'azienda? Preventivi24</a>'
+            '</div></div></div></section>' % (URL_CONTATTO, URL_AZIENDE)
+        )
 
     return "\n".join(parti)
 

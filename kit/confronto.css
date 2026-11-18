@@ -62,6 +62,14 @@ table.confronto-tbl li { margin-bottom:4px; }
 
 .badge-demo { display:inline-block; background: var(--amber); color:#14161C; font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:4px 10px; border-radius:100px; margin-bottom: var(--s-2); }
 
+.badge-livello { display:inline-block; font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:4px 10px; border-radius:100px; margin-bottom: var(--s-2); }
+.badge--gratuito { background: #16a34a; color:#fff; }
+.badge--completa { background: #d97706; color:#fff; }
+
+.upsell { background: #fffbeb; border:1px solid #f59e0b; border-radius: var(--r-lg); padding: var(--s-5); text-align:center; }
+.upsell h2 { font-family: var(--font-display); font-size: var(--t-h2); margin:0 0 var(--s-2); color: var(--ink); }
+.upsell p { color: var(--grey); margin:0 auto var(--s-4); max-width: 60ch; }
+
 @media (max-width: 640px) {
   .verdetto { padding: var(--s-4); }
   .tabella-wrap { border-radius: var(--r-sm); }

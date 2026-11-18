@@ -3,7 +3,7 @@
 Lato "cliente finale" di [Preventivi24](https://gabriruss1.github.io/preventivi24/).
 Live: https://gabriruss1.github.io/scelta24/
 
-Scelta24 confronta preventivi e contratti riga per riga: **costo reale, voci mancanti, rischi e verdetto**, con le domande da fare alle aziende. Gratis, controllato da una persona prima dell'invio. I documenti non vengono pubblicati ne' usati per addestrare modelli.
+Scelta24 confronta preventivi e contratti riga per riga: **costo reale, voci mancanti, rischi e verdetto**, con le domande da fare alle aziende. **Modello freemium**: verdetto sintetico gratis; analisi completa (tabella dettagliata, semafori, domande scritte) a pagamento (39 €). Controllato da una persona prima dell'invio. I documenti non vengono pubblicati ne' usati per addestrare modelli.
 
 Include anche il generatore di **proposte a 3 opzioni** (Base/Consigliata/Completa) usato come strumento e come fonte della griglia di completezza.
 
@@ -42,6 +42,15 @@ python generatore/serve.py
 4. **Controllo umano** e invio. I documenti vengono eliminati dopo la consegna.
 
 Le analisi/proposte reali **non** vanno nel repo pubblico (`publish_check.py` blocca). Deploy link privati: Cloudflare Pages dopo `npx wrangler login` (Fase B).
+
+## Livelli e prezzi
+
+| Livello | Cosa include | Prezzo |
+|---|---|---|
+| **Gratuito** | Quale preventivo scegliere e perche', costo reale stimato, verdetto in chiaro | 0 € |
+| **Completa** | Tabella riga per riga, voci mancanti, semafori di rischio (caparra, garanzia, tempi, detrazioni), domande scritte da inviare alle aziende | 39 € |
+
+Il campo `livello` in `analisi/<slug>/analisi.json` (`gratuito` o `completo`) determina cosa mostra il report generato da `analizza.py`.
 
 ## Requisiti
 - Python 3 (libreria standard)
