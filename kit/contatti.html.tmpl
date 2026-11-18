@@ -42,6 +42,7 @@
   <div class="wrap">
     <form action="https://formsubmit.co/russo.enterprise.biz@gmail.com" method="POST" id="contactForm" enctype="multipart/form-data">
       <input type="hidden" name="_subject" id="subjectField" value="Nuova richiesta dal sito Scelta24">
+      <input type="hidden" name="_reply_to" id="replyToField" value="">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://gabriruss1.github.io/scelta24/grazie.html">
@@ -100,6 +101,9 @@
           <li><a href="index.html">Confronta i tuoi preventivi</a></li>
           <li><a href="index.html#come-funziona">Come funziona</a></li>
           <li><a href="index.html#faq">Domande frequenti</a></li>
+          <li><a href="chi-sono.html">Chi siamo</a></li>
+          <li><a href="prezzi.html">Prezzi e pagamento</a></li>
+          <li><a href="termini.html">Termini e condizioni</a></li>
         </ul>
       </div>
       <div>
@@ -137,6 +141,12 @@
     var fn=document.querySelector('.form-note'); if(fn) fn.textContent='Analisi completa a pagamento (39 €). I documenti non vengono pubblicati ne\' usati per addestrare modelli e vengono eliminati dopo la consegna.';
   }
 })();
+
+document.getElementById('contactForm').addEventListener('submit', function(){
+  var email=document.getElementById('email');
+  var reply=document.getElementById('replyToField');
+  if(email && reply) reply.value=email.value;
+});
 </script>
 </body>
 </html>
