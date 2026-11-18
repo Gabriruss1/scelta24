@@ -105,17 +105,6 @@ def cerca_proposte(out_root):
 
 def costruisci_carte(proposte, out_root):
     carte = []
-    # confronto demo in evidenza, se presente
-    confronto = os.path.join(out_root, "confronto-demo-bagno")
-    if os.path.isdir(confronto) and os.path.exists(os.path.join(confronto, "index.html")):
-        img = '<img class="esempio__img" src="confronto-demo-bagno/og.png" alt="Anteprima del confronto dimostrativo" loading="lazy">'
-        carte.append(
-            '<a class="esempio" href="confronto-demo-bagno/">%s'
-            '<div class="esempio__corpo"><span>Confronto dimostrativo</span>'
-            '<h3>Bagno: preventivo piu\' basso vs costo reale</h3>'
-            '<p>Tabella riga per riga, semafori di rischio e verdetto: il piu\' economico non vince.</p></div></a>'
-            % img
-        )
     for p in proposte:
         if not p["indicizzabile"]:
             continue
@@ -312,10 +301,6 @@ def main():
 
     # --- sitemap.xml (solo le pagine indicizzabili)
     voci = ['  <url>\n    <loc>%s/</loc>\n    <priority>1.0</priority>\n  </url>' % url_base]
-    # confronto demo pubblico
-    confronto_demo = os.path.join(out_root, "confronto-demo-bagno", "index.html")
-    if os.path.exists(confronto_demo):
-        voci.append('  <url>\n    <loc>%s/confronto-demo-bagno/</loc>\n    <priority>0.9</priority>\n  </url>' % url_base)
     for p in indicizzabili:
         voci.append('  <url>\n    <loc>%s/%s/</loc>\n    <priority>0.7</priority>\n  </url>'
                     % (url_base, p["slug"]))

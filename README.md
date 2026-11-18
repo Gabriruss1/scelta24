@@ -10,8 +10,7 @@ Include anche il generatore di **proposte a 3 opzioni** (Base/Consigliata/Comple
 ## Struttura
 
 - `conoscenza/` — griglie di completezza per tipo di lavoro (il vantaggio: cosa deve esserci)
-- `analisi/confronto-demo-bagno/` — dati del confronto dimostrativo pubblico
-- `confronto-demo-bagno/`, `demo-edilcasa/`, `demo-serramenti/` — pagine generate
+- `demo-edilcasa/`, `demo-serramenti/` — pagine proposte generate
 - `generatore/analizza.py` — genera confronto (HTML + verdetto.pdf + og.png + domande.md)
 - `generatore/genera_proposta.py` — genera proposta a 3 opzioni (HTML + PDF + og.png)
 - `generatore/build_site.py`, `publish_check.py`, `serve.py`, `prova.py`
