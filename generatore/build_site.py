@@ -38,25 +38,19 @@ URL_CONTATTO = "contatti.html?servizio=confronto"
 
 FAQ = [
     ("Come faccio a confrontare due o tre preventivi?",
-     "Mettili uno accanto all'altro sulla stessa tabella: prezzo dichiarato, IVA, cosa e' incluso, "
-     "cosa manca, tempi, caparra e garanzia. Il preventivo piu' basso sulla carta spesso esclude "
-     "voci che poi paghi a parte. Scelta24 fa questo confronto riga per riga e ti mostra il costo reale."),
+     "Mettiamo le offerte sulla stessa base: prezzo dichiarato, IVA, voci incluse e mancanti, caparra, tempi e garanzia. "
+     "Il preventivo più basso sulla carta spesso esclude voci che poi paghi a parte. Scelta24 fa questo confronto riga per riga e ti mostra il costo totale stimato."),
     ("Cosa controllare in un preventivo di ristrutturazione o lavori in casa?",
-     "Controlla che ci siano demolizione e smaltimento, impermeabilizzazione, impianti con collaudo, "
-     "materiali specificati, tempi scritti, garanzia e condizioni di pagamento. Se una voce e' vaga "
-     "o manca, chiedila per iscritto prima di firmare."),
-    ("Come si capisce qual e' il preventivo piu' conveniente davvero?",
-     "Non basta il prezzo: conta il costo reale. Aggiungi le voci mancanti, verifica IVA e detrazioni, "
-     "guarda caparra, garanzia e tempi. Un preventivo piu' economico puo' costare di piu' se esclude "
-     "lavori essenziali o scarica rischi su di te."),
+     "Controlla che ci siano demolizione e smaltimento, impermeabilizzazione, impianti con collaudo, materiali specificati, tempi scritti, garanzia e condizioni di pagamento. Se una voce è vaga o manca, chiedila per iscritto prima di firmare."),
+    ("Qual è il preventivo più conveniente davvero?",
+     "Non basta il prezzo: conta il costo totale stimato. Aggiungi le voci mancanti, verifica IVA e detrazioni, guarda caparra, garanzia e tempi. Un preventivo più economico può costare di più se esclude lavori essenziali o scarica rischi su di te. La decisione va confermata con l'impresa."),
+    ("Quali lavori e documenti accettate?",
+     "Lavori in casa: bagno e ristrutturazioni, serramenti e infissi, fotovoltaico, climatizzazione e altri interventi. "
+     "Ci servono i PDF dei preventivi o dei contratti. Per il confronto gratuito servono almeno due preventivi; per l'analisi completa basta un contratto. Se i documenti sono incompleti, te lo diciamo e ti spieghiamo come procedere."),
     ("Chi gestisce la detrazione fiscale e la pratica CILA?",
-     "Dipende dal preventivo: alcuni la includono, altri la lasciano a tuo carico. Va scritto in modo "
-     "chiaro perche' ha un costo e serve per la detrazione. Se non e' indicato, e' una domanda da fare "
-     "all'azienda prima di scegliere."),
+     "Dipende dal preventivo: alcuni la includono, altri la lasciano a tuo carico. Va scritto in modo chiaro perché ha un costo e serve per la detrazione. Se non è indicato, è una domanda da fare all'azienda prima di scegliere."),
     ("I miei documenti sono al sicuro?",
-     "I preventivi e i contratti che ci invii servono solo per il confronto. Non finiscono in un "
-     "repository pubblico, non vengono usati per addestrare modelli e vengono eliminati dopo la consegna. "
-     "Il risultato viene controllato da una persona prima di arrivarti."),
+     "I preventivi e i contratti che invii servono solo per il confronto. Non finiscono in un repository pubblico, non vengono usati per addestrare modelli di IA e vengono eliminati dopo la consegna. Una persona verifica il risultato prima di inviartelo."),
 ]
 
 
@@ -193,7 +187,7 @@ def costruisci_jsonld(url_base):
                 "name": "Scelta24",
                 "url": url_base + "/",
                 "inLanguage": "it-IT",
-                "description": "Confronto preventivi e contratti: costo reale, voci mancanti, rischi e verdetto. Un servizio Preventivi24.",
+                "description": "Confronto preventivi e contratti: costo totale stimato, voci mancanti, rischi e verdetto. Un servizio Preventivi24.",
                 "publisher": {
                     "@type": "Organization",
                     "name": "Preventivi24",
@@ -243,8 +237,9 @@ def main():
                  % args.plausible)
 
     titolo = "Scelta24 — Confronta i preventivi e scegli quello giusto"
-    descrizione = ("Hai due o tre preventivi sul tavolo? Scelta24 li confronta riga per riga: costo reale, "
-                   "voci mancanti, rischi e verdetto. Gratis, controllato da una persona prima di arrivarti.")
+    descrizione = ("Hai due o tre preventivi sul tavolo? Scelta24 li confronta riga per riga: costo totale stimato, "
+                   "voci mancanti, rischi e verdetto. Verdetto sintetico gratuito; analisi completa a 39 €, "
+                   "controllata da una persona prima di arrivarti.")
 
     valori = {
         "TITOLO": esc(titolo),
@@ -270,15 +265,13 @@ def main():
 
     valori_contatti = {
         "TITOLO": esc("Contatti — Scelta24"),
-        "DESCRIZIONE": esc("Invia i tuoi preventivi a Scelta24 per il confronto assistito. Gratis, controllato da una persona prima dell'invio."),
+        "DESCRIZIONE": esc("Invia i tuoi preventivi a Scelta24: verdetto sintetico gratuito o analisi completa a 39 €."),
         "URL_CANONICA": esc(url_base + "/contatti.html"),
-        "KICKER": esc("Invia i tuoi preventivi"),
-        "TITOLO_H1": esc("Invia i tuoi preventivi"),
+        "KICKER": esc("Confronta i tuoi preventivi"),
+        "TITOLO_H1": esc("Confronta i tuoi preventivi"),
         "LEAD": esc("Mandaci i preventivi o i contratti che vuoi confrontare. Li analizziamo riga per riga e ti inviamo il verdetto, controllato da una persona. Gratis."),
-        "NOTA": esc("Gratis. Nessuna registrazione. I documenti non addestrano modelli e vengono eliminati dopo la consegna."),
-        "TIPO_LAVORO_VIS": "none",
-        "MESSAGGIO_PLACEHOLDER": esc("Descrivi brevemente la tua richiesta e indica quanti preventivi vuoi confrontare. Allega i PDF in risposta alla mail di conferma."),
-        "FORM_NOTE": esc("Gratis. I documenti non vengono pubblicati ne' usati per addestrare modelli e vengono eliminati dopo la consegna."),
+        "NOTA": esc("Gratis. Nessuna registrazione. Una persona verifica il risultato prima di inviartelo."),
+        "FORM_NOTE": esc("Gratis. I documenti non vengono pubblicati né usati per addestrare modelli e vengono eliminati dopo la consegna."),
         "URL_AZIENDE": URL_AZIENDE,
     }
     with open(os.path.join(out_root, "contatti.html"), "w", encoding="utf-8") as f:
@@ -298,6 +291,9 @@ def main():
     for p in indicizzabili:
         voci.append('  <url>\n    <loc>%s/%s/</loc>\n    <priority>0.7</priority>\n  </url>'
                     % (url_base, p["slug"]))
+    for pagina, priorita in (("chi-sono.html", "0.5"), ("prezzi.html", "0.5")):
+        voci.append('  <url>\n    <loc>%s/%s</loc>\n    <priority>%s</priority>\n  </url>'
+                    % (url_base, pagina, priorita))
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                + "\n".join(voci) + "\n</urlset>\n")

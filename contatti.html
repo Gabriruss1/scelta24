@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contatti — Scelta24</title>
-<meta name="description" content="Invia i tuoi preventivi a Scelta24 per il confronto assistito. Gratis, controllato da una persona prima dell&#x27;invio.">
+<meta name="description" content="Invia i tuoi preventivi a Scelta24: verdetto sintetico gratuito o analisi completa a 39 €.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0F1729">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="canonical" href="https://gabriruss1.github.io/scelta24/contatti.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +20,8 @@
 <header class="topbar">
   <div class="topbar__inner">
     <a class="logo" href="index.html">Scelta<span>24</span></a>
-    <nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Apri il menu">☰</button>
+    <nav id="menuPrincipale">
       <a href="index.html">Torna alla pagina principale</a>
       <a href="chi-sono.html">Chi siamo</a>
       <a href="prezzi.html">Prezzi</a>
@@ -30,56 +32,74 @@
 <main id="contenuto">
 <section class="hero">
   <div class="wrap">
-    <p class="hero__kicker">Invia i tuoi preventivi</p>
-    <h1>Invia i tuoi preventivi</h1>
-    <p class="hero__lead">Mandaci i preventivi o i contratti che vuoi confrontare. Li analizziamo riga per riga e ti inviamo il verdetto, controllato da una persona. Gratis.</p>
-    <div class="hero__azioni">
-      <a class="btn btn--ghost" href="index.html">Torna a Scelta24</a>
-    </div>
-    <p class="hero__nota">Gratis. Nessuna registrazione. I documenti non addestrano modelli e vengono eliminati dopo la consegna.</p>
+    <p class="hero__kicker">Confronta i tuoi preventivi</p>
+    <h1 id="heroTitle">Confronta i tuoi preventivi</h1>
+    <p class="hero__lead" id="heroLead">Mandaci i preventivi o i contratti che vuoi confrontare. Li analizziamo riga per riga e ti inviamo il verdetto, controllato da una persona. Gratis.</p>
+    <p class="hero__nota" id="heroNota">Gratis. Nessuna registrazione. Una persona verifica il risultato prima di inviartelo.</p>
   </div>
 </section>
 
 <section class="sezione">
   <div class="wrap">
-    <form action="https://formsubmit.co/russo.enterprise.biz@gmail.com" method="POST" id="contactForm" enctype="multipart/form-data">
+    <form action="https://formsubmit.co/russo.enterprise.biz@gmail.com" method="POST" id="contactForm" enctype="multipart/form-data" novalidate>
       <input type="hidden" name="_subject" id="subjectField" value="Nuova richiesta dal sito Scelta24">
-      <input type="hidden" name="_reply_to" id="replyToField" value="">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://gabriruss1.github.io/scelta24/grazie.html">
-      <input type="hidden" name="servizio" id="servizioField" value="">
+      <input type="hidden" name="servizio" id="servizioField" value="confronto">
       <input type="text" name="_honey" style="display:none">
 
+      <fieldset class="scelta-servizio">
+        <legend>Che servizio ti serve?</legend>
+        <div class="scelta-servizio__opzioni">
+          <label class="opzione">
+            <input type="radio" name="servizio_scelta" value="confronto" checked>
+            <span class="opzione__corpo">
+              <span class="opzione__titolo">Verdetto sintetico <span class="opzione__prezzo">Gratis</span></span>
+              <span class="opzione__desc">Quale preventivo scegliere e perché, con il costo totale stimato.</span>
+            </span>
+          </label>
+          <label class="opzione">
+            <input type="radio" name="servizio_scelta" value="analisi-completa">
+            <span class="opzione__corpo">
+              <span class="opzione__titolo">Analisi completa <span class="opzione__prezzo">39 &euro;</span></span>
+              <span class="opzione__desc">Tabella riga per riga, voci mancanti, semafori di rischio e domande da inviare.</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
       <label for="nome">Nome e cognome *</label>
-      <input type="text" id="nome" name="nome" required placeholder="Mario Rossi">
+      <input type="text" id="nome" name="nome" required autocomplete="name" placeholder="Mario Rossi">
 
       <label for="email">Email *</label>
-      <input type="email" id="email" name="email" required placeholder="mario@rossiserramenti.it">
+      <input type="email" id="email" name="email" required autocomplete="email" placeholder="mario@esempio.it">
 
       <label for="telefono">Telefono</label>
-      <input type="tel" id="telefono" name="telefono" placeholder="+39 333 1234567">
+      <input type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="+39 333 1234567">
 
-      <label for="tipo_lavoro" id="tipoLavoroLabel" style="display:none">Tipo di lavoro</label>
-      <select id="tipo_lavoro" name="tipo_lavoro" style="display:none">
+      <label for="tipo_lavoro">Tipo di lavoro</label>
+      <select id="tipo_lavoro" name="tipo_lavoro">
         <option value="">Seleziona...</option>
         <option value="bagno">Bagno / ristrutturazione</option>
         <option value="serramenti">Serramenti / infissi</option>
         <option value="fotovoltaico">Fotovoltaico</option>
         <option value="climatizzazione">Climatizzazione</option>
-        <option value="altro">Altro</option>
+        <option value="altro">Altro lavoro in casa</option>
       </select>
 
       <label for="messaggio">Messaggio *</label>
-      <textarea id="messaggio" name="messaggio" required>Descrivi brevemente la tua richiesta e indica quanti preventivi vuoi confrontare. Allega i PDF in risposta alla mail di conferma.</textarea>
+      <textarea id="messaggio" name="messaggio" required aria-describedby="messaggioAiuto" placeholder="Descrivi il lavoro e quanti preventivi vuoi confrontare."></textarea>
+      <p class="form-note" id="messaggioAiuto">Indica il tipo di lavoro, quanti preventivi hai ricevuto e cosa ti preoccupa di più (prezzo, tempi, garanzie).</p>
 
-      <label for="allegati">Allega preventivi o contratti (PDF)</label>
-      <input type="file" id="allegati" name="allegati" accept=".pdf" multiple placeholder="Allega PDF">
-      <p class="form-note" style="font-size:0.9rem;margin-top:4px;">Puoi allegare più PDF. Se hai più preventivi, mandali tutti insieme.</p>
+      <label for="allegati">PDF dei preventivi o dei contratti</label>
+      <input type="file" id="allegati" name="allegati" accept="application/pdf" multiple aria-describedby="allegatiAiuto">
+      <p class="form-note" id="allegatiAiuto">Carica qui i PDF. Per il confronto servono almeno due preventivi; per l'analisi completa basta un contratto. Dimensione totale massima: 10 MB.</p>
+      <ul class="lista-file" id="listaFile"></ul>
 
-      <button type="submit" class="btn btn--accent">Invia richiesta</button>
-      <div class="form-status" id="formStatus"></div>
-      <p class="form-note">Gratis. I documenti non vengono pubblicati ne&#x27; usati per addestrare modelli e vengono eliminati dopo la consegna.</p>
+      <button type="submit" class="btn btn--accent" id="submitBtn">Richiedi il verdetto gratuito</button>
+      <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+      <p class="form-note" id="formNote">Gratis. I documenti non vengono pubblicati né usati per addestrare modelli e vengono eliminati dopo la consegna.</p>
     </form>
   </div>
 </section>
@@ -87,7 +107,7 @@
 <section class="sezione sezione--scura">
   <div class="wrap">
     <h2 class="h2">Parliamone</h2>
-    <p class="sottotitolo">Scrivici, ti rispondiamo entro 24 ore.</p>
+    <p class="sottotitolo">Scrivici: ti rispondiamo entro 24 ore.</p>
     <div class="griglia griglia--3">
       <div class="card">
         <span class="card__num">Email</span>
@@ -97,12 +117,12 @@
       <div class="card">
         <span class="card__num">Orari</span>
         <h3>Quando scrivere</h3>
-        <p>Lunedì – Venerdì, 9:00 – 18:00. Fuori orario, rispondiamo il primo giorno utile.</p>
+        <p>Dal lunedì al venerdì, dalle 9:00 alle 18:00. Fuori orario, rispondiamo il primo giorno utile.</p>
       </div>
       <div class="card">
         <span class="card__num">Risposta</span>
         <h3>Entro 24 ore</h3>
-        <p>Ogni richiesta riceve una conferma di ricezione automatica e poi il nostro seguito personale.</p>
+        <p>Ti rispondiamo entro 24 ore per confermare la presa in carico e spiegare il prossimo passo.</p>
       </div>
     </div>
   </div>
@@ -110,9 +130,9 @@
 
 <section class="sezione">
   <div class="wrap" style="max-width:720px;">
-    <h2 class="h2" style="text-align:center;">Privacy e trattamento dati</h2>
-    <p style="font-size:15px;color:var(--grey);margin-bottom:12px;margin-top:24px;">I dati raccolti tramite questo modulo sono utilizzati esclusivamente per rispondere alla tua richiesta. Non vengono ceduti a terzi. Il trattamento avviene ai sensi dell'art. 6.1.f GDPR (interesse legittimo) e dell'art. 6.1.a (consenso).</p>
-    <p style="font-size:15px;color:var(--grey);">Hai il diritto di accedere, rettificare, cancellare i tuoi dati in qualsiasi momento, scrivendo a russo.enterprise.biz@gmail.com.</p>
+    <h2 class="h2" style="text-align:center;">Privacy e trattamento dei dati personali</h2>
+    <p style="font-size:15px;color:var(--grey);margin-bottom:12px;margin-top:24px;">I dati che invii servono solo a rispondere alla tua richiesta e a produrre il confronto. Il modulo li trasmette a un fornitore di posta (FormSubmit) che li recapita nella casella indicata. Non li usiamo per addestrare modelli di IA e non li cediamo a terzi per finalità commerciali.</p>
+    <p style="font-size:15px;color:var(--grey);">Hai il diritto di accedere ai tuoi dati e chiederne la rettifica o la cancellazione, scrivendo a russo.enterprise.biz@gmail.com. Per le condizioni del servizio, vedi <a href="termini.html">Termini e condizioni</a>.</p>
   </div>
 </section>
 
@@ -140,39 +160,145 @@
         </ul>
       </div>
     </div>
-    <p class="nota">Scelta24 &eacute; un servizio di <a href="https://gabriruss1.github.io/preventivi24">Preventivi24</a>. I documenti inviati non vengono pubblicati ne' usati per addestrare modelli.</p>
+    <p class="nota">Scelta24 &eacute; un servizio di <a href="https://gabriruss1.github.io/preventivi24">Preventivi24</a>. I documenti inviati non vengono pubblicati né usati per addestrare modelli.</p>
   </div>
 </footer>
 
 <script>
+  (function(){
+    var toggle=document.querySelector('.menu-toggle');
+    var nav=document.querySelector('.topbar nav');
+    if(!toggle||!nav) return;
+    nav.id = nav.id || 'menuPrincipale';
+    toggle.setAttribute('aria-controls', nav.id);
+    toggle.addEventListener('click', function(){
+      var aperta = nav.classList.toggle('nav--aperta');
+      toggle.setAttribute('aria-expanded', aperta ? 'true' : 'false');
+      toggle.textContent = aperta ? '✕' : '☰';
+    });
+  })();
+</script>
+<script>
 (function(){
-  var p=new URLSearchParams(location.search);
-  if(p.get('servizio')==='confronto'){
-    var s=document.getElementById('subjectField'); if(s) s.value='Confronto preventivi — Scelta24';
-    var sv=document.getElementById('servizioField'); if(sv) sv.value='confronto';
-    var h=document.getElementById('heroTitle'); if(h) h.textContent='Invia i tuoi preventivi';
-    var l=document.getElementById('heroLead'); if(l) l.textContent='Mandaci i preventivi o i contratti che vuoi confrontare. Li analizziamo riga per riga e ti inviamo il verdetto, controllato da una persona. Gratis.';
-    var tl=document.getElementById('tipoLavoroLabel'); if(tl) tl.style.display='block';
-    var ts=document.getElementById('tipo_lavoro'); if(ts) ts.style.display='block';
-    var m=document.getElementById('messaggio'); if(m) m.placeholder='Descrivi il lavoro e indica quanti preventivi vuoi confrontare. Allega i PDF rispondendo alla mail di conferma oppure scrivici a russo.enterprise.biz@gmail.com con i file in allegato.';
-    var fn=document.querySelector('.form-note'); if(fn) fn.textContent='Gratis. I documenti non vengono pubblicati ne\' usati per addestrare modelli e vengono eliminati dopo la consegna.';
-  } else if(p.get('servizio')==='analisi-completa'){
-    var s=document.getElementById('subjectField'); if(s) s.value='Analisi completa preventivi — Scelta24';
-    var sv=document.getElementById('servizioField'); if(sv) sv.value='analisi-completa';
-    var h=document.getElementById('heroTitle'); if(h) h.textContent='Richiedi l\'analisi completa';
-    var l=document.getElementById('heroLead'); if(l) l.textContent='Analisi completa dei tuoi preventivi e contratti: costo reale, voci mancanti, semafori di rischio e domande da fare alle aziende. 39 €, controllato da una persona prima di arrivarti.';
-    var tl=document.getElementById('tipoLavoroLabel'); if(tl) tl.style.display='block';
-    var ts=document.getElementById('tipo_lavoro'); if(ts) ts.style.display='block';
-    var m=document.getElementById('messaggio'); if(m) m.placeholder='Descrivi il lavoro da analizzare. Allega i PDF dei preventivi e dei contratti che vuoi confrontare.';
-    var fn=document.querySelector('.form-note'); if(fn) fn.textContent='Analisi completa a pagamento (39 €). I documenti non vengono pubblicati ne\' usati per addestrare modelli e vengono eliminati dopo la consegna.';
-  }
-})();
+  var TITOLI = {
+    'confronto': {
+      titolo: 'Confronta i tuoi preventivi',
+      lead: 'Mandaci i preventivi o i contratti che vuoi confrontare. Li analizziamo riga per riga e ti inviamo il verdetto, controllato da una persona. Gratis.',
+      nota: 'Gratis. Nessuna registrazione. Una persona verifica il risultato prima di inviartelo.',
+      pulsante: 'Richiedi il verdetto gratuito',
+      oggetto: 'Confronto preventivi — Scelta24',
+      formNote: 'Gratis. I documenti non vengono pubblicati né usati per addestrare modelli e vengono eliminati dopo la consegna.',
+      minFile: 2
+    },
+    'analisi-completa': {
+      titolo: 'Richiedi l\'analisi completa',
+      lead: 'Analisi completa dei tuoi preventivi e contratti: costo totale stimato, voci mancanti, semafori di rischio e domande da fare alle aziende. 39 €, controllato da una persona prima di arrivarti.',
+      nota: '39 €. Paga il committente finale, non il produttore. Ti inviamo le coordinate per il bonifico dopo la richiesta.',
+      pulsante: 'Richiedi l\'analisi completa — 39 €',
+      oggetto: 'Analisi completa preventivi — Scelta24',
+      formNote: 'Analisi completa a pagamento (39 €). I documenti non vengono pubblicati né usati per addestrare modelli e vengono eliminati dopo la consegna.',
+      minFile: 1
+    }
+  };
 
-document.getElementById('contactForm').addEventListener('submit', function(){
-  var email=document.getElementById('email');
-  var reply=document.getElementById('replyToField');
-  if(email && reply) reply.value=email.value;
-});
+  var radio = document.querySelectorAll('input[name="servizio_scelta"]');
+  var servizioField = document.getElementById('servizioField');
+  var subjectField = document.getElementById('subjectField');
+  var h = document.getElementById('heroTitle');
+  var l = document.getElementById('heroLead');
+  var nota = document.getElementById('heroNota');
+  var btn = document.getElementById('submitBtn');
+  var formNote = document.getElementById('formNote');
+  var allegati = document.getElementById('allegati');
+  var listaFile = document.getElementById('listaFile');
+  var stato = document.getElementById('formStatus');
+  var form = document.getElementById('contactForm');
+  var MINIMO = 2;
+
+  function applica(servizio){
+    var d = TITOLI[servizio]; if(!d) return;
+    if(h) h.textContent = d.titolo;
+    if(l) l.textContent = d.lead;
+    if(nota) nota.textContent = d.nota;
+    if(btn) btn.textContent = d.pulsante;
+    if(subjectField) subjectField.value = d.oggetto;
+    if(servizioField) servizioField.value = servizio;
+    if(formNote) formNote.textContent = d.formNote;
+    MINIMO = d.minFile;
+    validaFile();
+  }
+
+  function servizioDaUrl(){
+    var p = new URLSearchParams(location.search);
+    var s = p.get('servizio');
+    if(s === 'analisi-completa') return 'analisi-completa';
+    if(s === 'confronto') return 'confronto';
+    return 'confronto';
+  }
+
+  // stato iniziale: la scelta rispecchia l'URL (o il default)
+  var iniziale = servizioDaUrl();
+  for(var i=0;i<radio.length;i++){
+    radio[i].checked = (radio[i].value === iniziale);
+  }
+  applica(iniziale);
+
+  for(var j=0;j<radio.length;j++){
+    radio[j].addEventListener('change', function(){
+      applica(this.value);
+      var url = new URL(location.href);
+      url.searchParams.set('servizio', this.value);
+      history.replaceState(null, '', url);
+    });
+  }
+
+  function formattaBytes(n){
+    if(n < 1024) return n + ' B';
+    if(n < 1024*1024) return (n/1024).toFixed(0) + ' KB';
+    return (n/1024/1024).toFixed(1) + ' MB';
+  }
+
+  function validaFile(){
+    var files = allegati.files;
+    var totale = 0;
+    listaFile.innerHTML = '';
+    for(var i=0;i<files.length;i++){
+      totale += files[i].size;
+      var li = document.createElement('li');
+      li.textContent = files[i].name + ' (' + formattaBytes(files[i].size) + ')';
+      listaFile.appendChild(li);
+    }
+    if(files.length === 0) return true;
+    if(files.length < MINIMO){
+      stato.textContent = 'Servono almeno ' + MINIMO + ' PDF. Hai selezionato ' + files.length + '.';
+      stato.className = 'form-status form-status--errore';
+      return false;
+    }
+    if(totale > 10*1024*1024){
+      stato.textContent = 'I file superano il limite di 10 MB (totale ' + formattaBytes(totale) + ').';
+      stato.className = 'form-status form-status--errore';
+      return false;
+    }
+    stato.textContent = files.length + ' PDF selezionati, totale ' + formattaBytes(totale) + '.';
+    stato.className = 'form-status form-status--ok';
+    return true;
+  }
+
+  if(allegati){
+    allegati.addEventListener('change', validaFile);
+  }
+
+  form.addEventListener('submit', function(e){
+    if(!validaFile()){
+      e.preventDefault();
+      allegati.focus();
+      return;
+    }
+    stato.textContent = 'Invio in corso…';
+    stato.className = 'form-status';
+    btn.disabled = true;
+  });
+})();
 </script>
 
 <a class="torna-su" href="#" aria-label="Torna su">&#8593;</a>

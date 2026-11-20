@@ -172,10 +172,34 @@ footer.pie ul { list-style: none; margin: 0; padding: 0; font-size: .93rem; }
 footer.pie li { margin-bottom: 6px; }
 footer.pie .nota { font-size: var(--t-tiny); opacity: .55; margin: var(--s-4) 0 0; border-top: 1px solid rgba(245,240,232,.15); padding-top: var(--s-3); }
 
+/* --- menu mobile --- */
+.menu-toggle {
+  display: none;
+  background: var(--white); border: 2px solid var(--line); border-radius: var(--r-sm);
+  padding: 8px 12px; font-size: 1.3rem; cursor: pointer; color: var(--ink);
+  line-height: 1; font-family: var(--font-body);
+}
 @media (max-width: 640px) {
-  .topbar nav a:not(.cta) { display: none; }
+  .topbar__inner { position: relative; }
+  .menu-toggle { display: inline-flex; }
+  .topbar nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--paper); border-bottom: 1px solid var(--line);
+    flex-direction: column; padding: var(--s-3) var(--s-4); gap: var(--s-3);
+    z-index: 40;
+  }
+  .topbar nav--aperta { display: flex; }
+  .topbar nav a { padding: 8px 0; }
+  .topbar nav a.cta { margin-top: 4px; text-align: center; }
   .hero { padding: var(--s-5) 0; }
 }
+
+/* --- scroll header --- */
+section[id] { scroll-margin-top: 84px; }
+
+/* --- accessibilità: contraste testo su fondo chiaro --- */
+.hero__kicker { color: #9A6A1E; }
+.sezione--scura .hero__kicker { color: var(--amber); }
 
 @media print {
   .topbar, .hero__azioni, .btn { display: none; }
@@ -199,6 +223,30 @@ footer.pie .nota { font-size: var(--t-tiny); opacity: .55; margin: var(--s-4) 0 
 #contactForm .form-note { font-size: .85rem; color: var(--grey); margin: 0; }
 #contactForm .form-status { min-height: 1.2em; font-size: .9rem; }
 #contactForm button[type="submit"] { align-self: start; }
+
+/* --- scelta servizio --- */
+fieldset.scelta-servizio { border: 0; padding: 0; margin: 0 0 var(--s-4); min-width: 0; }
+.scelta-servizio legend { font-size: 1.05rem; font-weight: 700; margin-bottom: var(--s-3); }
+.scelta-servizio__opzioni { display: grid; gap: var(--s-3); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.scelta-servizio .opzione { position: relative; display: block; cursor: pointer; }
+.scelta-servizio .opzione input { position: absolute; opacity: 0; }
+.scelta-servizio .opzione__corpo {
+  display: block; border: 2px solid var(--line); border-radius: var(--r-md);
+  padding: var(--s-4); background: var(--white); height: 100%;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.scelta-servizio .opzione input:checked + .opzione__corpo { border-color: var(--amber); box-shadow: var(--shadow-md); }
+.scelta-servizio .opzione input:focus-visible + .opzione__corpo { outline: 3px solid var(--amber); outline-offset: 2px; }
+.scelta-servizio .opzione__titolo { display: block; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+.scelta-servizio .opzione__prezzo { color: var(--amber-dim); margin-left: 8px; }
+.scelta-servizio .opzione__desc { display: block; font-size: .92rem; color: var(--grey); }
+
+/* --- stato form --- */
+.form-status--errore { color: #B42318; font-weight: 600; }
+.form-status--ok { color: #166534; }
+#contactForm button[type="submit"]:disabled { opacity: .6; cursor: default; transform: none; box-shadow: none; }
+.lista-file { list-style: none; margin: var(--s-2) 0 0; padding: 0; font-size: .9rem; color: var(--grey); }
+.lista-file li { padding: 4px 0; border-bottom: 1px dashed var(--line); }
 
 /* --- torna su --- */
 .torna-su {

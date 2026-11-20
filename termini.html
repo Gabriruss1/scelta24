@@ -6,6 +6,7 @@
 <title>Termini e condizioni — analisi completa Scelta24</title>
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0F1729">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="canonical" href="https://gabriruss1.github.io/scelta24/termini.html">
 <link rel="stylesheet" href="assets/landing.css">
 </head>
@@ -15,7 +16,8 @@
 <header class="topbar">
   <div class="topbar__inner">
     <a class="logo" href="index.html">Scelta<span>24</span></a>
-    <nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Apri il menu">☰</button>
+    <nav id="menuPrincipale">
       <a href="#come-funziona">Come funziona</a>
       <a href="chi-sono.html">Chi siamo</a>
       <a href="prezzi.html">Prezzi</a>
@@ -80,6 +82,20 @@
   </div>
 </footer>
 
+<script>
+  (function(){
+    var toggle=document.querySelector('.menu-toggle');
+    var nav=document.querySelector('.topbar nav');
+    if(!toggle||!nav) return;
+    nav.id = nav.id || 'menuPrincipale';
+    toggle.setAttribute('aria-controls', nav.id);
+    toggle.addEventListener('click', function(){
+      var aperta = nav.classList.toggle('nav--aperta');
+      toggle.setAttribute('aria-expanded', aperta ? 'true' : 'false');
+      toggle.textContent = aperta ? '✕' : '☰';
+    });
+  })();
+</script>
 <a class="torna-su" href="#" aria-label="Torna su">&#8593;</a>
 <script>
   (function(){
