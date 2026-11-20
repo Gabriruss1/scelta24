@@ -181,3 +181,16 @@ footer.pie .nota { font-size: var(--t-tiny); opacity: .55; margin: var(--s-4) 0 
   .topbar, .hero__azioni, .btn { display: none; }
   body { background: #fff; }
 }
+
+/* --- torna su --- */
+.torna-su {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--brand); color: var(--brand-ink);
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 1.5rem; line-height: 1;
+  box-shadow: var(--shadow-md); z-index: 100;
+  opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+}
+.torna-su--visibile { opacity: 1; visibility: visible; }
+.torna-su:hover { background: var(--brand-ink); color: var(--brand); }

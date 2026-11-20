@@ -21,6 +21,8 @@
     <a class="logo" href="index.html">Scelta<span>24</span></a>
     <nav>
       <a href="index.html">Torna alla pagina principale</a>
+      <a href="chi-sono.html">Chi siamo</a>
+      <a href="prezzi.html">Prezzi</a>
     </nav>
   </div>
 </header>
@@ -79,6 +81,30 @@
       <div class="form-status" id="formStatus"></div>
       <p class="form-note">$FORM_NOTE</p>
     </form>
+  </div>
+</section>
+
+<section class="sezione sezione--scura">
+  <div class="wrap">
+    <h2 class="h2">Parliamone</h2>
+    <p class="sottotitolo">Scrivici, ti rispondiamo entro 24 ore.</p>
+    <div class="griglia griglia--3">
+      <div class="card">
+        <span class="card__num">Email</span>
+        <h3>Contatto diretto</h3>
+        <p><a href="mailto:russo.enterprise.biz@gmail.com" style="color:var(--amber);text-decoration:underline;">russo.enterprise.biz@gmail.com</a></p>
+      </div>
+      <div class="card">
+        <span class="card__num">Orari</span>
+        <h3>Quando scrivere</h3>
+        <p>Lunedì – Venerdì, 9:00 – 18:00. Fuori orario, rispondiamo il primo giorno utile.</p>
+      </div>
+      <div class="card">
+        <span class="card__num">Risposta</span>
+        <h3>Entro 24 ore</h3>
+        <p>Ogni richiesta riceve una conferma di ricezione automatica e poi il nostro seguito personale.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -147,6 +173,21 @@ document.getElementById('contactForm').addEventListener('submit', function(){
   var reply=document.getElementById('replyToField');
   if(email && reply) reply.value=email.value;
 });
+</script>
+
+<a class="torna-su" href="#" aria-label="Torna su">&#8593;</a>
+<script>
+  (function(){
+    var btn=document.querySelector('.torna-su');
+    if(!btn) return;
+    window.addEventListener('scroll', function(){
+      if(window.scrollY>300) btn.classList.add('torna-su--visibile');
+      else btn.classList.remove('torna-su--visibile');
+    });
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
+    });
+  })();
 </script>
 </body>
 </html>

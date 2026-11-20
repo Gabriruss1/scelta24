@@ -16,6 +16,17 @@
   .ok{color:#166534;font-weight:700;margin-right:8px}
   a.btn{display:inline-block;background:#0F1729;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;margin-top:16px}
   a.btn:hover{background:#1e293b}
+  .torna-su {
+    position: fixed; bottom: 24px; right: 24px;
+    background: #0F1729; color: #fff;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 1.5rem; line-height: 1;
+    box-shadow: 0 4px 24px rgba(0,0,0,.15); z-index: 100;
+    opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+  }
+  .torna-su--visibile { opacity: 1; visibility: visible; }
+  .torna-su:hover { background: #1e293b; color: #fff; }
 </style>
 </head>
 <body>
@@ -28,5 +39,19 @@
     <a class="btn" href="index.html">Torna alla pagina principale</a>
   </div>
 </div>
+  <a class="torna-su" href="#" aria-label="Torna su">&#8593;</a>
+  <script>
+    (function(){
+      var btn=document.querySelector('.torna-su');
+      if(!btn) return;
+      window.addEventListener('scroll', function(){
+        if(window.scrollY>300) btn.classList.add('torna-su--visibile');
+        else btn.classList.remove('torna-su--visibile');
+      });
+      btn.addEventListener('click', function(e){
+        e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
+      });
+    })();
+  </script>
 </body>
 </html>
