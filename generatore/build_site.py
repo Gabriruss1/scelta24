@@ -34,7 +34,7 @@ KIT_LANDING_TMPL = os.path.join(KIT, "landing.html.tmpl")
 KIT_TOKENS = os.path.join(KIT, "tokens.css")
 
 URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
-URL_CONTATTO = "/contatti.html?servizio=confronto"
+URL_CONTATTO = "contatti.html?servizio=confronto"
 
 FAQ = [
     ("Come faccio a confrontare due o tre preventivi?",
