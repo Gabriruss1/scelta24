@@ -6,41 +6,34 @@
 <title>Termini e condizioni — analisi completa Scelta24</title>
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0F1729">
-<style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#14161C;background:#F5F0E8;padding:24px}
-  .wrap{max-width:640px;margin:48px auto;padding:0 16px}
-  .card{background:#fff;border-radius:12px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
-  h1{font-size:1.5rem;margin-bottom:12px}
-  h2{font-size:1.15rem;margin:24px 0 12px}
-  p{color:#4a4a4a;margin-bottom:16px}
-  a.btn{display:inline-block;background:#0F1729;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;margin-top:16px}
-  a.btn:hover{background:#1e293b}
-  ul{color:#4a4a4a;margin-bottom:16px;padding-left:20px}
-  li{margin-bottom:8px}
-  .nota{font-size:0.9rem;color:#666;margin-top:24px;border-top:1px solid #ddd;padding-top:16px}
-  .torna-su {
-    position: fixed; bottom: 24px; right: 24px;
-    background: #0F1729; color: #fff;
-    width: 44px; height: 44px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    text-decoration: none; font-size: 1.5rem; line-height: 1;
-    box-shadow: 0 4px 24px rgba(0,0,0,.15); z-index: 100;
-    opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
-  }
-  .torna-su--visibile { opacity: 1; visibility: visible; }
-  .torna-su:hover { background: #1e293b; color: #fff; }
-</style>
+<link rel="canonical" href="https://gabriruss1.github.io/scelta24/termini.html">
+<link rel="stylesheet" href="assets/landing.css">
 </head>
 <body>
-<div class="wrap">
-  <div class="card">
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="logo" href="index.html">Scelta<span>24</span></a>
+    <nav>
+      <a href="#come-funziona">Come funziona</a>
+      <a href="chi-sono.html">Chi siamo</a>
+      <a href="prezzi.html">Prezzi</a>
+      <a href="#faq">Domande</a>
+      <a class="cta" href="contatti.html?servizio=confronto">Invia i tuoi preventivi</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenuto">
+<section class="sezione">
+  <div class="wrap">
     <h1>Termini e condizioni</h1>
     <p>Queste condizioni si applicano all'<strong>analisi completa</strong> di Scelta24 (costo 39 €). Il verdetto sintetico resta gratuito.</p>
     <h2>Cosa include l'analisi completa (39 €)</h2>
     <ul>
       <li>Tabella riga per riga dei preventivi ricevuti</li>
-      <li>Costo reale stimato, IVA inclusa</li>
+      <li>Costo totale stimato, IVA inclusa</li>
       <li>Voci mancanti e voci vaghe</li>
       <li>Semafori di rischio: caparra, garanzia, tempi, detrazioni</li>
       <li>Domande scritte da inviare alle aziende</li>
@@ -51,28 +44,55 @@
     <h2>Tempi di consegna</h2>
     <p>Consegniamo l'analisi entro 5 giorni lavorativi dalla ricezione del bonifico e dei documenti completi.</p>
     <h2>Rimborso</h2>
-    <p>Se non siamo in grado di produrre l'analisi (documenti illeggibili o insufficienti), restituisciamo l'importo pagato.</p>
+    <p>Se non siamo in grado di produrre l'analisi (documenti illeggibili o insufficienti), restituiamo l'importo pagato.</p>
     <h2>Responsabilità</h2>
     <p>Il verdetto è un supporto alla decisione, non una perizia né una garanzia sul risultato dei lavori. Spetta a te verificare le informazioni con le aziende.</p>
     <h2>Privacy</h2>
     <p>I documenti inviati non vengono pubblicati né usati per addestrare modelli. Vengono eliminati dopo la consegna secondo la procedura concordata.</p>
-    <p><a class="btn" href="contatti.html">Invia i tuoi preventivi</a></p>
-    <p class="nota">Scelta24 è un servizio di Preventivi24. I prezzi reali dipendono dai documenti ricevuti e dai sopralluoghi.</p>
+    <p><a class="btn btn--accent" href="contatti.html?servizio=analisi-completa">Richiedi l'analisi completa — 39 €</a></p>
+    <p class="nota">Scelta24 è un servizio di Preventivi24. I costi dei lavori riportati negli esempi sono stime, non confonderti con i 39 € del servizio.</p>
   </div>
-</div>
-  <a class="torna-su" href="#" aria-label="Torna su">&#8593;</a>
-  <script>
-    (function(){
-      var btn=document.querySelector('.torna-su');
-      if(!btn) return;
-      window.addEventListener('scroll', function(){
-        if(window.scrollY>300) btn.classList.add('torna-su--visibile');
-        else btn.classList.remove('torna-su--visibile');
-      });
-      btn.addEventListener('click', function(e){
-        e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
-      });
-    })();
-  </script>
+</section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <div class="colonne">
+      <div>
+        <h4>Scelta24</h4>
+        <ul>
+          <li><a href="#come-funziona">Come funziona</a></li>
+          <li><a href="#faq">Domande frequenti</a></li>
+          <li><a href="contatti.html?servizio=confronto">Invia i tuoi preventivi</a></li>
+          <li><a href="chi-sono.html">Chi siamo</a></li>
+          <li><a href="prezzi.html">Prezzi e pagamento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Per le aziende</h4>
+        <ul>
+          <li><a href="https://gabriruss1.github.io/preventivi24">Preventivi24: presenta meglio i tuoi preventivi</a></li>
+          <li><a href="https://gabriruss1.github.io/preventivi24/contatti.html">Contatti Preventivi24</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota">Scelta24 è un servizio di <a href="https://gabriruss1.github.io/preventivi24">Preventivi24</a>. I documenti inviati non vengono pubblicati né usati per addestrare modelli.</p>
+  </div>
+</footer>
+
+<a class="torna-su" href="#" aria-label="Torna su">&#8593;</a>
+<script>
+  (function(){
+    var btn=document.querySelector('.torna-su');
+    if(!btn) return;
+    window.addEventListener('scroll', function(){
+      if(window.scrollY>300) btn.classList.add('torna-su--visibile');
+      else btn.classList.remove('torna-su--visibile');
+    });
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
+    });
+  })();
+</script>
 </body>
 </html>

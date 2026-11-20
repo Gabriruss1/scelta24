@@ -226,13 +226,8 @@ def main():
     with open(KIT_LANDING_TMPL, "r", encoding="utf-8") as f:
         tmpl = Template(f.read())
 
-    # stessa versione degli asset usata dal generatore di proposte
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    from genera_proposta import versione_assets, pulizia_asset
-    versione = versione_assets()
-
     # gli asset devono esistere: se il generatore non e' mai girato, si copiano
-    assets_dir = os.path.join(out_root, "assets", versione)
+    assets_dir = os.path.join(out_root, "assets")
     os.makedirs(assets_dir, exist_ok=True)
     for sorgente, nome in ((os.path.join(KIT, "proposta.css"), "proposta.css"),
                            (os.path.join(KIT, "proposta.js"), "proposta.js"),
@@ -258,7 +253,7 @@ def main():
         "OG_TITOLO": esc("Confronta i preventivi. Scegli quello giusto."),
         "OG_DESCRIZIONE": esc(descrizione),
         "OG_IMMAGINE": esc(url_base + "/images/og.png"),
-        "CSS_HREF": esc("assets/%s/landing.css" % versione),
+        "CSS_HREF": esc("assets/landing.css"),
         "PIANO_SCRIPT": piano,
         "JSON_LD": costruisci_jsonld(url_base),
         "ESEMPI": costruisci_carte(proposte, out_root),
@@ -277,7 +272,6 @@ def main():
         "TITOLO": esc("Contatti — Scelta24"),
         "DESCRIZIONE": esc("Invia i tuoi preventivi a Scelta24 per il confronto assistito. Gratis, controllato da una persona prima dell'invio."),
         "URL_CANONICA": esc(url_base + "/contatti.html"),
-        "CSS_VER": versione,
         "KICKER": esc("Invia i tuoi preventivi"),
         "TITOLO_H1": esc("Invia i tuoi preventivi"),
         "LEAD": esc("Mandaci i preventivi o i contratti che vuoi confrontare. Li analizziamo riga per riga e ti inviamo il verdetto, controllato da una persona. Gratis."),
@@ -317,9 +311,6 @@ def main():
     print("Sito pubblico generato in %s" % out_root)
     print("  index.html   robots.txt   sitemap.xml   images/og.png")
     print("Proposte indicizzabili in sitemap: %d su %d" % (len(indicizzabili), len(proposte)))
-    rimosse = pulizia_asset(out_root)
-    if rimosse:
-        print("Asset versione precedente rimossa: %s" % ", ".join(rimosse))
     return 0
 
 

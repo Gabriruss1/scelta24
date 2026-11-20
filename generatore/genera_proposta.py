@@ -723,9 +723,8 @@ def main():
     out_dir = os.path.join(out_root, slug)
     os.makedirs(out_dir, exist_ok=True)
 
-    # gli asset condivisi, in una cartella versionata (cache busting)
-    versione = versione_assets()
-    assets_dir = os.path.join(out_root, "assets", versione)
+    # gli asset condivisi, percorsi fissi (senza cache busting per versione)
+    assets_dir = os.path.join(out_root, "assets")
     os.makedirs(assets_dir, exist_ok=True)
     for sorgente, nome in ((KIT_CSS, "proposta.css"), (KIT_JS, "proposta.js"),
                            (KIT_TOKENS, "tokens.css"), (KIT_LANDING_CSS, "landing.css")):
@@ -735,8 +734,8 @@ def main():
     url_canonica = "%s/%s/" % (args.url_base.rstrip("/"), slug)
     opts = {
         "url_canonica": url_canonica,
-        "css_href": "../assets/%s/proposta.css" % versione,
-        "js_href": "../assets/%s/proposta.js" % versione,
+        "css_href": "../assets/proposta.css",
+        "js_href": "../assets/proposta.js",
         "robots": args.robots,
         "plausible": args.plausible,
         "assets_root": out_root,
