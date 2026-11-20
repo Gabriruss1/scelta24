@@ -81,11 +81,33 @@
       <label for="tipo_lavoro">Tipo di lavoro</label>
       <select id="tipo_lavoro" name="tipo_lavoro">
         <option value="">Seleziona...</option>
-        <option value="bagno">Bagno / ristrutturazione</option>
-        <option value="serramenti">Serramenti / infissi</option>
-        <option value="fotovoltaico">Fotovoltaico</option>
-        <option value="climatizzazione">Climatizzazione</option>
-        <option value="altro">Altro lavoro in casa</option>
+        <optgroup label="Edilizia e ristrutturazione">
+          <option value="bagno">Bagno / ristrutturazione</option>
+          <option value="cucina">Cucina</option>
+          <option value="pavimenti">Pavimentazione / rivestimenti</option>
+          <option value="pittura">Pittura / tinteggiatura</option>
+          <option value="tetto">Tetto / copertura</option>
+          <option value="cappotto">Isolamento termico / cappotto</option>
+          <option value="ristrutturazione-completa">Ristrutturazione completa</option>
+        </optgroup>
+        <optgroup label="Impianti">
+          <option value="elettrico">Impianto elettrico</option>
+          <option value="idraulico">Impianto idraulico</option>
+          <option value="riscaldamento">Riscaldamento (caldaia, pompa di calore)</option>
+          <option value="climatizzazione">Climatizzazione / condizionamento</option>
+          <option value="fotovoltaico">Fotovoltaico / solare termico</option>
+          <option value="domotica">Domotica / automazione</option>
+        </optgroup>
+        <optgroup label="Serramenti e esterni">
+          <option value="serramenti">Serramenti / infissi</option>
+          <option value="porte">Porte interne / blindate</option>
+          <option value="giardino">Giardino / esterni / pavimentazione esterna</option>
+          <option value="ascensore">Ascensore / montascale / piattaforma</option>
+        </optgroup>
+        <optgroup label="Altro">
+          <option value="altro">Altro lavoro in casa</option>
+          <option value="non-so">Non lo so ancora / da valutare</option>
+        </optgroup>
       </select>
 
       <label for="messaggio">Messaggio *</label>

@@ -45,8 +45,8 @@ FAQ = [
     ("Qual è il preventivo più conveniente davvero?",
      "Non basta il prezzo: conta il costo totale stimato. Aggiungi le voci mancanti, verifica IVA e detrazioni, guarda caparra, garanzia e tempi. Un preventivo più economico può costare di più se esclude lavori essenziali o scarica rischi su di te. La decisione va confermata con l'impresa."),
     ("Quali lavori e documenti accettate?",
-     "Lavori in casa: bagno e ristrutturazioni, serramenti e infissi, fotovoltaico, climatizzazione e altri interventi. "
-     "Ci servono i PDF dei preventivi o dei contratti. Per il confronto gratuito servono almeno due preventivi; per l'analisi completa basta un contratto. Se i documenti sono incompleti, te lo diciamo e ti spieghiamo come procedere."),
+     "Qualsiasi lavoro in casa: bagno e ristrutturazioni, cucina, pavimentazioni, tetto, isolamento, impianti elettrici e idraulici, riscaldamento, climatizzazione, fotovoltaico, serramenti, porte, giardino, ascensori e molto altro. "
+     "Ci servono i PDF dei preventivi o dei contratti. Per il confronto gratuito servono almeno due preventivi; per l'analisi completa basta un contratto. Se il tuo lavoro non è in elenco, scegli «Altro» e descrivilo nel messaggio: lo gestiamo comunque. Se i documenti sono incompleti, te lo diciamo e ti spieghiamo come procedere."),
     ("Chi gestisce la detrazione fiscale e la pratica CILA?",
      "Dipende dal preventivo: alcuni la includono, altri la lasciano a tuo carico. Va scritto in modo chiaro perché ha un costo e serve per la detrazione. Se non è indicato, è una domanda da fare all'azienda prima di scegliere."),
     ("I miei documenti sono al sicuro?",
