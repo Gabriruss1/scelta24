@@ -116,9 +116,9 @@
 
       <label for="allegati1">PDF dei preventivi o dei contratti (fino a 3)</label>
       <input type="file" id="allegati1" name="attachment" accept="application/pdf" aria-describedby="allegatiAiuto">
-      <input type="file" id="allegati2" name="attachment" accept="application/pdf" aria-label="Secondo PDF (facoltativo)">
-      <input type="file" id="allegati3" name="attachment" accept="application/pdf" aria-label="Terzo PDF (facoltativo)">
-      <p class="form-note" id="allegatiAiuto">Carica qui i PDF, uno per campo. Per il confronto servono almeno due preventivi; per l'analisi completa basta un contratto. Dimensione totale massima: 5 MB. Più di 3 PDF o file pesanti? Invia gli extra via email a $EMAIL_CONTATTO. Se non hai i PDF, invia comunque la richiesta: ti aiutiamo a ottenerli.</p>
+      <input type="file" id="allegati2" name="attachment2" accept="application/pdf" aria-label="Secondo PDF (facoltativo)">
+      <input type="file" id="allegati3" name="attachment3" accept="application/pdf" aria-label="Terzo PDF (facoltativo)">
+      <p class="form-note" id="allegatiAiuto">Carica qui i PDF, uno per campo. Per il confronto servono almeno due preventivi; per l'analisi completa basta un contratto. Dimensione totale massima: 10 MB. Più di 3 PDF o file pesanti? Invia gli extra via email a $EMAIL_CONTATTO. Se non hai i PDF, invia comunque la richiesta: ti aiutiamo a ottenerli.</p>
       <ul class="lista-file" id="listaFile"></ul>
 
       <button type="submit" class="btn btn--accent" id="submitBtn">Richiedi il verdetto gratuito</button>
@@ -311,8 +311,8 @@
       stato.className = 'form-status';
       return true;
     }
-    if(totale > 5*1024*1024){
-      stato.textContent = 'I file superano il limite di 5 MB (totale ' + formattaBytes(totale) + '). Comprimili o inviali via email a $EMAIL_CONTATTO.';
+    if(totale > 10*1024*1024){
+      stato.textContent = 'I file superano il limite di 10 MB (totale ' + formattaBytes(totale) + '). Comprimili o inviali via email a $EMAIL_CONTATTO.';
       stato.className = 'form-status form-status--errore';
       return false;
     }
