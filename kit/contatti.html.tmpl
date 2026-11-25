@@ -115,8 +115,8 @@
       <p class="form-note" id="messaggioAiuto">Indica il tipo di lavoro, quanti preventivi hai ricevuto e cosa ti preoccupa di più (prezzo, tempi, garanzie).</p>
 
       <label for="allegati">PDF dei preventivi o dei contratti</label>
-      <input type="file" id="allegati" name="allegati" accept="application/pdf" multiple aria-describedby="allegatiAiuto">
-      <p class="form-note" id="allegatiAiuto">Carica qui i PDF. Per il confronto servono almeno due preventivi; per l'analisi completa basta un contratto. Dimensione totale massima: 10 MB.</p>
+      <input type="file" id="allegati" name="attachment" accept="application/pdf" multiple aria-describedby="allegatiAiuto">
+      <p class="form-note" id="allegatiAiuto">Carica qui i PDF. Per il confronto servono almeno due preventivi; per l'analisi completa basta un contratto. Dimensione totale massima: 5 MB. Se non hai i PDF o superano i 5 MB, invia comunque la richiesta: ti aiutiamo a ottenere o a inviare i documenti via email.</p>
       <ul class="lista-file" id="listaFile"></ul>
 
       <button type="submit" class="btn btn--accent" id="submitBtn">Richiedi il verdetto gratuito</button>
@@ -290,16 +290,20 @@
       li.textContent = files[i].name + ' (' + formattaBytes(files[i].size) + ')';
       listaFile.appendChild(li);
     }
-    if(files.length === 0) return true;
-    if(files.length < MINIMO){
-      stato.textContent = 'Servono almeno ' + MINIMO + ' PDF. Hai selezionato ' + files.length + '.';
+    if(files.length === 0){
+      stato.textContent = 'Nessun PDF selezionato: invia comunque la richiesta. Se non hai i documenti, ti aiutiamo a ottenerli dall\u2019impresa.';
+      stato.className = 'form-status';
+      return true;
+    }
+    if(totale > 5*1024*1024){
+      stato.textContent = 'I file superano il limite di 5 MB (totale ' + formattaBytes(totale) + '). Comprimili o inviali via email a russo.enterprise.biz@gmail.com.';
       stato.className = 'form-status form-status--errore';
       return false;
     }
-    if(totale > 10*1024*1024){
-      stato.textContent = 'I file superano il limite di 10 MB (totale ' + formattaBytes(totale) + ').';
-      stato.className = 'form-status form-status--errore';
-      return false;
+    if(files.length < MINIMO){
+      stato.textContent = files.length + ' PDF selezionati (' + formattaBytes(totale) + '). Per il confronto servono almeno ' + MINIMO + ': invia comunque, ti contattiamo per capire come procedere.';
+      stato.className = 'form-status form-status--avviso';
+      return true;
     }
     stato.textContent = files.length + ' PDF selezionati, totale ' + formattaBytes(totale) + '.';
     stato.className = 'form-status form-status--ok';
