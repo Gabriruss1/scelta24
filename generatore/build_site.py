@@ -36,6 +36,10 @@ KIT_TOKENS = os.path.join(KIT, "tokens.css")
 URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
 URL_CONTATTO = "contatti.html?servizio=confronto"
 
+# Casella che riceve le richieste dal modulo di contatto.
+# Per la casella business: python generatore\build_site.py --email russo.enterprise.biz@gmail.com
+EMAIL_CONTATTO = "gabriruss98@hotmail.it"
+
 FAQ = [
     ("Come faccio a confrontare due o tre preventivi?",
      "Mettiamo le offerte sulla stessa base: prezzo dichiarato, IVA, voci incluse e mancanti, caparra, tempi e garanzia. "
@@ -208,10 +212,13 @@ def main():
     parser.add_argument("--out", default=ROOT, help="cartella del sito")
     parser.add_argument("--url-base", default="https://gabriruss1.github.io/scelta24")
     parser.add_argument("--plausible", default="", help="dominio Plausible")
+    parser.add_argument("--email", default=EMAIL_CONTATTO,
+                        help="casella che riceve le richieste dal modulo di contatto")
     args = parser.parse_args()
 
     out_root = os.path.abspath(args.out)
     url_base = args.url_base.rstrip("/")
+    email_contatto = args.email.strip()
 
     proposte = cerca_proposte(out_root)
     indicizzabili = [p for p in proposte if p["indicizzabile"]]
@@ -273,6 +280,7 @@ def main():
         "NOTA": esc("Gratis. Nessuna registrazione. Una persona verifica il risultato prima di inviartelo."),
         "FORM_NOTE": esc("Gratis. I documenti non vengono pubblicati né usati per addestrare modelli e vengono eliminati dopo la consegna."),
         "URL_AZIENDE": URL_AZIENDE,
+        "EMAIL_CONTATTO": esc(email_contatto),
     }
     with open(os.path.join(out_root, "contatti.html"), "w", encoding="utf-8") as f:
         f.write(tmpl_contatti.substitute(valori_contatti))
