@@ -37,8 +37,9 @@ URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
 URL_CONTATTO = "contatti.html?servizio=confronto"
 
 # Casella che riceve le richieste dal modulo di contatto.
-# Per la casella business: python generatore\build_site.py --email russo.enterprise.biz@gmail.com
-EMAIL_CONTATTO = "gabriruss98@hotmail.it"
+# Casella business: le richieste reali arrivano SEMPRE qui.
+# Per un test temporaneo: python generatore\build_site.py --email gabriruss98@hotmail.it
+EMAIL_CONTATTO = "russo.enterprise.biz@gmail.com"
 
 FAQ = [
     ("Come faccio a confrontare due o tre preventivi?",
