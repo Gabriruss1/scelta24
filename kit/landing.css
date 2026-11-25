@@ -220,6 +220,7 @@ section[id] { scroll-margin-top: 84px; }
 }
 #contactForm textarea { min-height: 120px; resize: vertical; }
 #contactForm input[type="file"] { padding: 6px 4px; font-size: .95rem; color: var(--grey); }
+#contactForm input[type="file"] + input[type="file"] { margin-top: 6px; }
 #contactForm .form-note { font-size: .85rem; color: var(--grey); margin: 0; }
 #contactForm .form-status { min-height: 1.2em; font-size: .9rem; }
 #contactForm button[type="submit"] { align-self: start; }

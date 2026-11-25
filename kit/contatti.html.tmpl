@@ -114,9 +114,11 @@
       <textarea id="messaggio" name="messaggio" required aria-describedby="messaggioAiuto" placeholder="Descrivi il lavoro e quanti preventivi vuoi confrontare."></textarea>
       <p class="form-note" id="messaggioAiuto">Indica il tipo di lavoro, quanti preventivi hai ricevuto e cosa ti preoccupa di più (prezzo, tempi, garanzie).</p>
 
-      <label for="allegati">PDF dei preventivi o dei contratti</label>
-      <input type="file" id="allegati" name="attachment" accept="application/pdf" multiple aria-describedby="allegatiAiuto">
-      <p class="form-note" id="allegatiAiuto">Carica qui i PDF. Per il confronto servono almeno due preventivi; per l'analisi completa basta un contratto. Dimensione totale massima: 5 MB. Se non hai i PDF o superano i 5 MB, invia comunque la richiesta: ti aiutiamo a ottenere o a inviare i documenti via email.</p>
+      <label for="allegati1">PDF dei preventivi o dei contratti (fino a 3)</label>
+      <input type="file" id="allegati1" name="attachment" accept="application/pdf" aria-describedby="allegatiAiuto">
+      <input type="file" id="allegati2" name="attachment" accept="application/pdf" aria-label="Secondo PDF (facoltativo)">
+      <input type="file" id="allegati3" name="attachment" accept="application/pdf" aria-label="Terzo PDF (facoltativo)">
+      <p class="form-note" id="allegatiAiuto">Carica qui i PDF, uno per campo. Per il confronto servono almeno due preventivi; per l'analisi completa basta un contratto. Dimensione totale massima: 5 MB. Più di 3 PDF o file pesanti? Invia gli extra via email a $EMAIL_CONTATTO. Se non hai i PDF, invia comunque la richiesta: ti aiutiamo a ottenerli.</p>
       <ul class="lista-file" id="listaFile"></ul>
 
       <button type="submit" class="btn btn--accent" id="submitBtn">Richiedi il verdetto gratuito</button>
@@ -231,7 +233,10 @@
   var nota = document.getElementById('heroNota');
   var btn = document.getElementById('submitBtn');
   var formNote = document.getElementById('formNote');
-  var allegati = document.getElementById('allegati');
+  var allegati = document.getElementById('allegati1');
+  var campiFile = ['allegati1', 'allegati2', 'allegati3'].map(function(id){
+    return document.getElementById(id);
+  }).filter(Boolean);
   var listaFile = document.getElementById('listaFile');
   var stato = document.getElementById('formStatus');
   var form = document.getElementById('contactForm');
@@ -280,8 +285,19 @@
     return (n/1024/1024).toFixed(1) + ' MB';
   }
 
+  function raccogliFile(){
+    var tutti = [];
+    for(var i=0;i<campiFile.length;i++){
+      var files = campiFile[i].files;
+      for(var j=0;j<files.length;j++){
+        tutti.push(files[j]);
+      }
+    }
+    return tutti;
+  }
+
   function validaFile(){
-    var files = allegati.files;
+    var files = raccogliFile();
     var totale = 0;
     listaFile.innerHTML = '';
     for(var i=0;i<files.length;i++){
@@ -310,8 +326,8 @@
     return true;
   }
 
-  if(allegati){
-    allegati.addEventListener('change', validaFile);
+  for(var k=0;k<campiFile.length;k++){
+    campiFile[k].addEventListener('change', validaFile);
   }
 
   form.addEventListener('submit', function(e){
