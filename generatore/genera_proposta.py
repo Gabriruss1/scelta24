@@ -42,14 +42,19 @@ KIT_TMPL = os.path.join(KIT, "proposta.html.tmpl")
 KIT_TOKENS = os.path.join(KIT, "tokens.css")
 KIT_LANDING_CSS = os.path.join(KIT, "landing.css")
 KIT_LANDING_TMPL = os.path.join(KIT, "landing.html.tmpl")
+KIT_CONFRONTO_CSS = os.path.join(KIT, "confronto.css")
 
-CHROME_CANDIDATI = [
-    r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-    r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-    os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"),
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    "/usr/bin/google-chrome",
-]
+# importa config_loader
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from config_loader import (  # noqa: E402
+    CHROME_CANDIDATI,
+    CHROME_TIMEOUT_OG,
+    CHROME_TIMEOUT_PDF,
+    PDF_MAX_PAGINE,
+    trova_chrome,
+    SITE_BASE_URL as URL_BASE_DEFAULT,
+    URL_AZIENDE as URL_SITO_B2B,
+)
 
 # parole che il progetto vieta: niente marketing vuoto nei documenti
 PAROLE_VIETATE = [
@@ -57,12 +62,6 @@ PAROLE_VIETATE = [
     "qualita' senza compromessi", "qualità senza compromessi", "unici nel settore",
     "passione", "amore per", "sogni", "soluzioni all'avanguardia",
 ]
-
-# URL base di default: GitHub Pages di Scelta24
-URL_BASE_DEFAULT = "https://gabriruss1.github.io/scelta24"
-
-# Sito principale Preventivi24 (per i rimandi "parliamone")
-URL_SITO_B2B = "https://gabriruss1.github.io/preventivi24"
 
 
 # --------------------------------------------------------------------------
@@ -108,7 +107,7 @@ def versione_assets():
     Serve a non servire CSS vecchio dalla cache dei browser."""
     import hashlib
     h = hashlib.sha256()
-    for percorso in (KIT_CSS, KIT_JS, KIT_TOKENS, KIT_LANDING_CSS):
+    for percorso in (KIT_CSS, KIT_JS, KIT_TOKENS, KIT_LANDING_CSS, KIT_CONFRONTO_CSS):
         try:
             with open(percorso, "rb") as f:
                 h.update(f.read())
@@ -603,10 +602,13 @@ h2{font-size:30px;font-weight:400;opacity:.82;margin-top:22px;max-width:860px;li
             "--window-size=1200,630", "--screenshot=%s" % percorso_out,
             "file:///" + html_path.replace("\\", "/"),
         ]
-        subprocess.run(comando, capture_output=True, timeout=90)
+        subprocess.run(comando, capture_output=True, timeout=CHROME_TIMEOUT_OG)
         if os.path.exists(percorso_out) and os.path.getsize(percorso_out) > 1000:
             return percorso_out
         print("  [!] Anteprima OG non generata")
+        return None
+    except subprocess.TimeoutExpired:
+        print("  [!] Timeout generazione OG (%ds)" % CHROME_TIMEOUT_OG)
         return None
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)
@@ -623,8 +625,24 @@ def genera_pdf(pagina_path, percorso_out):
         "--print-to-pdf=%s" % percorso_out,
         "file:///" + os.path.abspath(pagina_path).replace("\\", "/"),
     ]
-    subprocess.run(comando, capture_output=True, timeout=120)
+    subprocess.run(comando, capture_output=True, timeout=CHROME_TIMEOUT_PDF)
     if os.path.exists(percorso_out) and os.path.getsize(percorso_out) > 2000:
+        # Check pagina (per proposte il limite è 2, per verdetti 1)
+        try:
+            pdf_bytes = open(percorso_out, "rb").read()
+            pagine = len(re.findall(rb"/Type\s*/Page(?![s])", pdf_bytes))
+            if pagine == 0:
+                m = re.search(rb"/Type\s*/Pages.{0,400}?/Count\s+(\d+)", pdf_bytes, re.S)
+                if m:
+                    pagine = int(m.group(1))
+            # Per le proposte il target è 2 pagine, per i verdetti 1
+            # Qui non sappiamo se è proposta o verdetto, quindi avvisiamo solo se > 2
+            if pagine > 2:
+                print("  [!] PDF ha %d pagine (attese max 2 per proposta)" % pagine)
+            elif pagine == 0:
+                print("  [!] PDF: impossibile contare le pagine")
+        except Exception:
+            pass
         return percorso_out
     print("  [!] PDF non generato")
     return None
@@ -674,6 +692,8 @@ def pulizia_asset(out_root):
 
     rimosse = []
     for voce in sorted(os.listdir(assets_root)):
+        if voce == "fonts":
+            continue  # cartella font self-hosted, non versionata
         percorso = os.path.join(assets_root, voce)
         if not os.path.isdir(percorso):
             continue
@@ -730,6 +750,15 @@ def main():
                            (KIT_TOKENS, "tokens.css"), (KIT_LANDING_CSS, "landing.css")):
         if os.path.exists(sorgente):
             shutil.copyfile(sorgente, os.path.join(assets_dir, nome))
+    # copia font self-hosted (solo se sorgente e destinazione sono diverse)
+    fonts_src = os.path.join(ROOT, "assets", "fonts")
+    fonts_dst = os.path.join(assets_dir, "fonts")
+    if os.path.isdir(fonts_src) and os.path.abspath(fonts_src) != os.path.abspath(fonts_dst):
+        if os.path.exists(fonts_dst):
+            shutil.rmtree(fonts_dst)
+        os.makedirs(fonts_dst, exist_ok=True)
+        for entry in os.listdir(fonts_src):
+            shutil.copy2(os.path.join(fonts_src, entry), os.path.join(fonts_dst, entry))
 
     url_canonica = "%s/%s/" % (args.url_base.rstrip("/"), slug)
     opts = {

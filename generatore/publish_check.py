@@ -23,9 +23,11 @@ PATTERN_VIETATI = [
     (r"tel:\+39\b", "link telefono morto"),
     (r"lorem ipsum", "testo di riempimento"),
     (r"cdnjs", "CDN estero"),
-    (r"http://fonts\.googleapis", "font servito in chiaro"),
+    (r"https?://fonts\.googleapis", "font Google Fonts CDN"),
+    (r"fonts\.gstatic\.com", "font Google Fonts CDN"),
     (r"YOUR_", "segnaposto"),
     (r"undefined", "valore undefined nel sorgente"),
+    (r"gabriruss98@hotmail\.it", "email personale nel codice"),
 ]
 
 FILE_OBBLIGATORI = [
@@ -34,15 +36,6 @@ FILE_OBBLIGATORI = [
     "sitemap.xml",
     ".nojekyll",
 ]
-
-CARTEGGIATE = [
-    # (nome file, cosa non deve contenere)
-    ("campione-preventivo-serramenti.html", None),
-]
-
-
-def problema(msg):
-    return msg
 
 
 def controlla_file_obbligatori():
@@ -55,15 +48,24 @@ def controlla_file_obbligatori():
 
 def controlla_pattern():
     problemi = []
-    for percorso in sorted(glob.glob(os.path.join(ROOT, "*.html"))):
-        nome = os.path.basename(percorso)
-        with open(percorso, "r", encoding="utf-8") as f:
-            contenuto = f.read()
-        for pattern, label in PATTERN_VIETATI:
-            if re.search(pattern, contenuto, re.IGNORECASE):
-                problemi.append("%s: %s" % (nome, label))
-        if "</html>" in contenuto and contenuto.split("</html>", 1)[1].strip():
-            problemi.append("%s: contenuto dopo </html>" % nome)
+    # scan ricorsivo di tutte le .html pubblicate
+    esclusi_dir = {"assets", "kit", "generatore", "proposte", "docs", "images", ".git",
+                   ".opencode", ".github", "conoscenza", "analisi", "prova-output", "_chk"}
+    for root_dir, dirs, files in os.walk(ROOT):
+        # salta directory escluse
+        dirs[:] = [d for d in dirs if d not in esclusi_dir and not d.startswith(".")]
+        for nome in files:
+            if not nome.endswith(".html"):
+                continue
+            percorso = os.path.join(root_dir, nome)
+            with open(percorso, "r", encoding="utf-8") as f:
+                contenuto = f.read()
+            rel_path = os.path.relpath(percorso, ROOT)
+            for pattern, label in PATTERN_VIETATI:
+                if re.search(pattern, contenuto, re.IGNORECASE):
+                    problemi.append("%s: %s" % (rel_path, label))
+            if "</html>" in contenuto and contenuto.split("</html>", 1)[1].strip():
+                problemi.append("%s: contenuto dopo </html>" % rel_path)
     return problemi
 
 

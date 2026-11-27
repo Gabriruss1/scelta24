@@ -1,0 +1,23 @@
+{
+  "site": {
+    "base_url": "https://gabriruss1.github.io/scelta24",
+    "prefix": "/scelta24"
+  },
+  "contact": {
+    "email": "russo.enterprise.biz@gmail.com",
+    "form_endpoint": "https://formsubmit.co/russo.enterprise.biz@gmail.com"
+  },
+  "links": {
+    "aziende": "https://gabriruss1.github.io/preventivi24",
+    "grazie": "https://gabriruss1.github.io/scelta24/grazie.html"
+  },
+  "assets": {
+    "versioned": true,
+    "fonts_self_hosted": true
+  },
+  "generation": {
+    "chrome_timeout_og": 90,
+    "chrome_timeout_pdf": 120,
+    "pdf_max_pages": 1
+  }
+}

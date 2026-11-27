@@ -27,15 +27,20 @@ KIT_TMPL = os.path.join(KIT, "confronto.html.tmpl")
 KIT_CSS = os.path.join(KIT, "confronto.css")
 KIT_TOKENS = os.path.join(KIT, "tokens.css")
 
-URL_BASE_DEFAULT = "https://gabriruss1.github.io/scelta24"
-URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
-URL_CONTATTO = "/contatti.html?servizio=confronto"
-URL_ANALISI_COMPLETA = "/contatti.html?servizio=analisi-completa"
-
-# importa utility dal generatore esistente
+# importa utility dal generatore esistente e config_loader
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from config_loader import (  # noqa: E402
+    SITE_BASE_URL as URL_BASE_DEFAULT,
+    URL_AZIENDE,
+    URL_CONTATTO,
+    URL_ANALISI_COMPLETA,
+    trova_chrome,
+    CHROME_TIMEOUT_OG,
+    CHROME_TIMEOUT_PDF,
+    PDF_MAX_PAGINE,
+)
 from genera_proposta import (  # noqa: E402
-    esc, fmt_prezzo, trova_chrome, versione_assets, pulizia_asset,
+    esc, fmt_prezzo, versione_assets, pulizia_asset,
 )
 
 
@@ -340,10 +345,13 @@ h2{font-size:28px;font-weight:400;opacity:.85;margin-top:22px;max-width:900px;li
                "--force-device-scale-factor=1", "--virtual-time-budget=4000",
                "--window-size=1200,630", "--screenshot=%s" % percorso_out,
                "file:///" + html_path.replace("\\", "/")]
-        subprocess.run(cmd, capture_output=True, timeout=90)
+        subprocess.run(cmd, capture_output=True, timeout=CHROME_TIMEOUT_OG)
         if os.path.exists(percorso_out) and os.path.getsize(percorso_out) > 1000:
             return percorso_out
         print("  [!] og.png non generato")
+        return None
+    except subprocess.TimeoutExpired:
+        print("  [!] Timeout generazione og.png (%ds)" % CHROME_TIMEOUT_OG)
         return None
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)
@@ -418,10 +426,28 @@ h3{font-size:11pt;margin:14px 0 6px;color:#0F1729}
                "--no-pdf-header-footer", "--virtual-time-budget=5000",
                "--print-to-pdf=%s" % percorso_out,
                "file:///" + html_path.replace("\\", "/")]
-        subprocess.run(cmd, capture_output=True, timeout=120)
+        subprocess.run(cmd, capture_output=True, timeout=CHROME_TIMEOUT_PDF)
         if os.path.exists(percorso_out) and os.path.getsize(percorso_out) > 1000:
+            # Check pagina unica
+            try:
+                pdf_bytes = open(percorso_out, "rb").read()
+                pagine = len(re.findall(rb"/Type\s*/Page(?![s])", pdf_bytes))
+                if pagine == 0:
+                    # fallback su /Count
+                    m = re.search(rb"/Type\s*/Pages.{0,400}?/Count\s+(\d+)", pdf_bytes, re.S)
+                    if m:
+                        pagine = int(m.group(1))
+                if pagine > PDF_MAX_PAGINE:
+                    print("  [!] verdetto.pdf ha %d pagine (massimo %d) - rivedi il contenuto" % (pagine, PDF_MAX_PAGINE))
+                elif pagine == 0:
+                    print("  [!] verdetto.pdf: impossibile contare le pagine")
+            except Exception:
+                pass
             return percorso_out
         print("  [!] verdetto.pdf non generato")
+        return None
+    except subprocess.TimeoutExpired:
+        print("  [!] Timeout generazione verdetto.pdf (%ds)" % CHROME_TIMEOUT_PDF)
         return None
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)
@@ -470,6 +496,15 @@ def main():
                        (os.path.join(KIT, "landing.css"), "landing.css")):
         if os.path.exists(sorg):
             shutil.copyfile(sorg, os.path.join(assets_dir, nome))
+    # copia font self-hosted
+    fonts_src = os.path.join(ROOT, "assets", "fonts")
+    fonts_dst = os.path.join(assets_dir, "fonts")
+    if os.path.isdir(fonts_src):
+        if os.path.exists(fonts_dst):
+            shutil.rmtree(fonts_dst)
+        os.makedirs(fonts_dst, exist_ok=True)
+        for entry in os.listdir(fonts_src):
+            shutil.copy2(os.path.join(fonts_src, entry), os.path.join(fonts_dst, entry))
 
     url_base = args.url_base.rstrip("/")
     url_canon = "%s/%s/" % (url_base, slug)
@@ -509,6 +544,11 @@ def main():
         genera_og(d, os.path.join(out_dir, "og.png"))
     if not args.no_pdf:
         genera_pdf_verdetto(d, os.path.join(out_dir, "verdetto.pdf"))
+
+    # pulizia asset versioni orfane
+    rimosse = pulizia_asset(out_root)
+    if rimosse:
+        print("Asset versione precedente rimossa: %s" % ", ".join(rimosse))
 
     print("Confronto generato: %s" % out_dir)
     print("  index.html  domande.md  %s  %s" % (

@@ -262,3 +262,24 @@ fieldset.scelta-servizio { border: 0; padding: 0; margin: 0 0 var(--s-4); min-wi
 }
 .torna-su--visibile { opacity: 1; visibility: visible; }
 .torna-su:hover { background: var(--brand-ink); color: var(--brand); }
+
+/* --- privacy checkbox --- */
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: var(--s-3) 0;
+  font-size: .9rem;
+  color: var(--ink);
+  line-height: 1.4;
+  cursor: pointer;
+}
+.checkbox-wrapper input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--brand);
+}
+.checkbox-wrapper a { color: var(--brand); text-decoration: underline; }
+.checkbox-wrapper a:hover { color: var(--amber); }

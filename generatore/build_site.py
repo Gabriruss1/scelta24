@@ -33,13 +33,18 @@ KIT_LANDING_CSS = os.path.join(KIT, "landing.css")
 KIT_LANDING_TMPL = os.path.join(KIT, "landing.html.tmpl")
 KIT_TOKENS = os.path.join(KIT, "tokens.css")
 
-URL_AZIENDE = "https://gabriruss1.github.io/preventivi24"
-URL_CONTATTO = "contatti.html?servizio=confronto"
-
-# Casella che riceve le richieste dal modulo di contatto.
-# Casella business: le richieste reali arrivano SEMPRE qui.
-# Per un test temporaneo: python generatore\build_site.py --email gabriruss98@hotmail.it
-EMAIL_CONTATTO = "russo.enterprise.biz@gmail.com"
+# importa config_loader
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from config_loader import (  # noqa: E402
+    URL_AZIENDE,
+    URL_CONTATTO,
+    EMAIL_CONTATTO,
+    SITE_BASE_URL,
+    CHROME_TIMEOUT_OG,
+    trova_chrome,
+    FORM_ENDPOINT,
+    URL_GRAZIE,
+)
 
 FAQ = [
     ("Come faccio a confrontare due o tre preventivi?",
@@ -131,13 +136,7 @@ def costruisci_faq():
 
 def genera_og_landing(percorso_out):
     """Scheda 1200x630 della landing."""
-    chrome_candidati = [
-        r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-        r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-        os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"),
-        shutil.which("chrome") or shutil.which("google-chrome"),
-    ]
-    chrome = next((c for c in chrome_candidati if c and os.path.exists(c)), None)
+    chrome = trova_chrome()
     if not chrome:
         print("  [!] Chrome non trovato: anteprima OG saltata")
         return None
@@ -169,7 +168,7 @@ h2{font-size:30px;font-weight:400;opacity:.85;margin-top:26px;max-width:860px;li
             "--window-size=1200,630", "--screenshot=%s" % percorso_out,
             "file:///" + html_path.replace("\\", "/"),
         ]
-        subprocess.run(comando, capture_output=True, timeout=90)
+        subprocess.run(comando, capture_output=True, timeout=CHROME_TIMEOUT_OG)
     if os.path.exists(percorso_out) and os.path.getsize(percorso_out) > 1000:
         return percorso_out
     print("  [!] Anteprima OG della landing non generata")
@@ -238,6 +237,15 @@ def main():
                            (os.path.join(KIT, "confronto.css"), "confronto.css")):
         if os.path.exists(sorgente):
             shutil.copyfile(sorgente, os.path.join(assets_dir, nome))
+    # copia font self-hosted (solo se sorgente e destinazione sono diverse)
+    fonts_src = os.path.join(ROOT, "assets", "fonts")
+    fonts_dst = os.path.join(assets_dir, "fonts")
+    if os.path.isdir(fonts_src) and os.path.abspath(fonts_src) != os.path.abspath(fonts_dst):
+        if os.path.exists(fonts_dst):
+            shutil.rmtree(fonts_dst)
+        os.makedirs(fonts_dst, exist_ok=True)
+        for entry in os.listdir(fonts_src):
+            shutil.copy2(os.path.join(fonts_src, entry), os.path.join(fonts_dst, entry))
 
     piano = ""
     if args.plausible:
@@ -282,6 +290,8 @@ def main():
         "FORM_NOTE": esc("Gratis. I documenti non vengono pubblicati né usati per addestrare modelli e vengono eliminati dopo la consegna."),
         "URL_AZIENDE": URL_AZIENDE,
         "EMAIL_CONTATTO": esc(email_contatto),
+        "FORM_ENDPOINT": esc(FORM_ENDPOINT),
+        "URL_GRAZIE": esc(URL_GRAZIE),
     }
     with open(os.path.join(out_root, "contatti.html"), "w", encoding="utf-8") as f:
         f.write(tmpl_contatti.substitute(valori_contatti))
@@ -312,6 +322,12 @@ def main():
     # --- anteprima della landing
     os.makedirs(os.path.join(out_root, "images"), exist_ok=True)
     genera_og_landing(os.path.join(out_root, "images", "og.png"))
+
+    # pulizia asset versioni orfane
+    from genera_proposta import pulizia_asset
+    rimosse = pulizia_asset(out_root)
+    if rimosse:
+        print("Asset versione precedente rimossa: %s" % ", ".join(rimosse))
 
     print("Sito pubblico generato in %s" % out_root)
     print("  index.html   robots.txt   sitemap.xml   images/og.png")
